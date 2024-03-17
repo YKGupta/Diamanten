@@ -6,6 +6,7 @@ public class MouseEvents : MonoBehaviour
     public event Action<GameObject> onMouseEnter;
     public event Action<GameObject> onMouseOver;
     public event Action<GameObject> onMouseExit;
+    public event Action<GameObject> onMouseDrag;
     public event Action<GameObject> onMouseDown;
     public event Action<GameObject> onMouseUp;
 
@@ -27,6 +28,11 @@ public class MouseEvents : MonoBehaviour
     private void OnMouseDown()
     {
         onMouseDown?.Invoke(gameObject);
+    }
+
+    private void OnMouseDrag()
+    {
+        onMouseDrag?.Invoke(gameObject);
     }
 
     private void OnMouseUp()
