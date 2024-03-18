@@ -33,6 +33,9 @@ public class DragAndDropManager : MonoBehaviour
         DragAndDropInfo info = lookup[dragItem];
         foreach(DropItem dropItem in info.dropItems)
         {
+            if(dropItem.id == dragItem.currentId)
+                continue;
+                
             dropItem.mouseEvents.onMouseOver += StartEffect_DropItem;
             dropItem.mouseEvents.onMouseExit += EndEffect_DropItem;
         }
@@ -43,6 +46,9 @@ public class DragAndDropManager : MonoBehaviour
         DragAndDropInfo info = lookup[dragItem];
         foreach(DropItem dropItem in info.dropItems)
         {
+            if(dropItem.id == dragItem.currentId)
+                continue;
+                
             EndEffect_DropItem(dropItem.gameObject);   // Manually ending to make sure there aren't any inconsistent
             dropItem.mouseEvents.onMouseOver -= StartEffect_DropItem;
             dropItem.mouseEvents.onMouseExit -= EndEffect_DropItem;

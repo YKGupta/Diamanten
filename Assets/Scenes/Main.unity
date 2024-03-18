@@ -1410,6 +1410,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactionUIGO: {fileID: 674292982}
   mouseEvents: {fileID: 0}
+  id: 0
 --- !u!1 &620802964
 GameObject:
   m_ObjectHideFlags: 0
@@ -4421,6 +4422,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactionUIGO: {fileID: 1401553636}
   mouseEvents: {fileID: 0}
+  id: 1
 --- !u!114 &1787061805
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5004,7 +5006,9 @@ MonoBehaviour:
   dropItemMask:
     serializedVersion: 2
     m_Bits: 512
+  correctId: 0
   range: 10
+  currentId: 0
 --- !u!114 &2045250010
 MonoBehaviour:
   m_ObjectHideFlags: 0

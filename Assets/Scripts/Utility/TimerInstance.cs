@@ -11,10 +11,12 @@ public class TimerInstance : MonoBehaviour
     public event Func<TimerInstance, IEnumerator> timerStart;
 
     private float timer;
+    private bool isOver;
 
     private void Start()
     {
         timer = duration;
+        isOver = false;
         if(timerStart != null)
             StartCoroutine(timerStart(this));
     }
@@ -22,11 +24,12 @@ public class TimerInstance : MonoBehaviour
     private void Update()
     {
         timer = Mathf.Max(0f, timer - Time.deltaTime * clockSpeed);
-        if(timer == 0f)
+        if(!isOver && timer == 0f)
         {
             if(timerOver != null)
                 StartCoroutine(timerOver(this));
             Destroy(gameObject, 1f);
+            isOver = true;
         }
     }
 
