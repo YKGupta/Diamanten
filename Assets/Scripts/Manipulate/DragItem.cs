@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using NaughtyAttributes;
 
 public class DragItem : MonoBehaviour, IInteractionEffect
 {
@@ -9,7 +10,7 @@ public class DragItem : MonoBehaviour, IInteractionEffect
     public int correctId;
     public float range = 10f;
 
-    [HideInInspector]
+    [ReadOnly]
     public int currentId;
 
     public Action<DragItem> onItemDrag;
@@ -18,6 +19,7 @@ public class DragItem : MonoBehaviour, IInteractionEffect
     private MouseEvents mouseEvents;
     private bool isBeingDragged;
     private Vector3 startPos, endPos;
+    private Quaternion startRot, endRot;
 
     private void Start()
     {
@@ -47,9 +49,7 @@ public class DragItem : MonoBehaviour, IInteractionEffect
             return;
             
         isBeingDragged = false;
-
-        onItemDrop?.Invoke(this);
-
+        
         RaycastHit hitInfo;
         if(Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo, Mathf.Infinity, dropItemMask))
         {
@@ -63,6 +63,8 @@ public class DragItem : MonoBehaviour, IInteractionEffect
 
             startPos = transform.position;
             endPos = hitInfo.collider.transform.position;
+            startRot = transform.rotation;
+            endRot = hitInfo.collider.transform.rotation;
             Timer.instance.ClearAllTimers("drag");
             TimerInstance timer = Timer.instance.CreateTimer(1, 1, "drag");
             timer.timerStart += LerpPosition;
@@ -71,6 +73,8 @@ public class DragItem : MonoBehaviour, IInteractionEffect
         interactionUIGO.SetActive(false);
         interactionUIGO.transform.GetChild(0).gameObject.SetActive(true); // LMB Icon
         interactionUIGO.transform.GetChild(1).gameObject.SetActive(false); // Drag Icon
+
+        onItemDrop?.Invoke(this);
     }
 
     private IEnumerator LerpPosition(TimerInstance timer)
@@ -78,9 +82,11 @@ public class DragItem : MonoBehaviour, IInteractionEffect
         while(!Mathf.Approximately(timer.NormalizedValue(), 1f))
         {
             transform.position = Vector3.Lerp(startPos, endPos, timer.NormalizedValue());
+            transform.rotation = Quaternion.Lerp(startRot, endRot, timer.NormalizedValue());
             yield return null;
         }
         transform.position = endPos;
+        transform.rotation = endRot;
     }
 
     public void StartEffect()

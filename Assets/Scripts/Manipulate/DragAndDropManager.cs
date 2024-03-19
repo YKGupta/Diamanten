@@ -44,14 +44,29 @@ public class DragAndDropManager : MonoBehaviour
     public void OnItemDrop(DragItem dragItem)
     {
         DragAndDropInfo info = lookup[dragItem];
+        bool allItemsDroppedCorrectly = true;
         foreach(DropItem dropItem in info.dropItems)
         {
             if(dropItem.id == dragItem.currentId)
                 continue;
-                
+
             EndEffect_DropItem(dropItem.gameObject);   // Manually ending to make sure there aren't any inconsistent
             dropItem.mouseEvents.onMouseOver -= StartEffect_DropItem;
             dropItem.mouseEvents.onMouseExit -= EndEffect_DropItem;
+        }
+
+        foreach(DragItem i in info.dragItems)
+        {
+            if(i.currentId != i.correctId)
+            {
+                allItemsDroppedCorrectly = false;
+                break;
+            }
+        }
+
+        if(allItemsDroppedCorrectly)
+        {
+            Debug.Log("All items were placed correctly! Task Completed!");
         }
     }
 
