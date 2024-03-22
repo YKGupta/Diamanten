@@ -5,9 +5,14 @@ using NaughtyAttributes;
 
 public class DragItem : MonoBehaviour, IInteractionEffect
 {
+    [BoxGroup("UI")]
     public GameObject interactionUIGO;
+    [BoxGroup("Drop Item Specifics")]
     public LayerMask dropItemMask;
+    [BoxGroup("Drop Item Specifics")]
     public int correctId;
+    [BoxGroup("Drag Item Specifics")]
+    [Range(0f, 50f)]
     public float range = 10f;
 
     [ReadOnly]
@@ -18,15 +23,19 @@ public class DragItem : MonoBehaviour, IInteractionEffect
 
     private MouseEvents mouseEvents;
     private bool isBeingDragged;
+
+    // These are used by the Lerping Function to interpolate between the drag item's position and the position where it is dragged to
     private Vector3 startPos, endPos;
     private Quaternion startRot, endRot;
 
     private void Start()
     {
         currentId = -1;
+
         mouseEvents = GetComponent<MouseEvents>();
         mouseEvents.onMouseDown += BeginDrag;
         mouseEvents.onMouseUp += EndDrag;
+
         isBeingDragged = false;
     }
 
@@ -112,7 +121,7 @@ public class DragItem : MonoBehaviour, IInteractionEffect
             interactionUIGO.SetActive(false);
     }
 
-    private bool isInteractable()
+    public bool isInteractable()
     {
         return enabled && Vector3.Distance(transform.position, PlayerInfo.instance.GetPosition()) <= range;
     }

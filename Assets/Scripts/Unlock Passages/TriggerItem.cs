@@ -1,17 +1,28 @@
-using UnityEngine;
 using NaughtyAttributes;
+using UnityEngine;
 
-public class FindItem : MonoBehaviour, IInteractionEffect
+public class TriggerItem : MonoBehaviour, IInteractionEffect
 {
     [BoxGroup("UI")]
     public GameObject interactionUIGO;
-    [BoxGroup("Find Item Specifics")]
+    [BoxGroup("Trigger Item Specifics")]
     [Range(0f, 50f)]
     public float range = 10f;
 
-    public void OnItemCollected()
+    private MouseEvents mouseEvents;
+
+    private void Start()
     {
-        gameObject.SetActive(false);
+        mouseEvents = GetComponent<MouseEvents>();
+        mouseEvents.onMouseDown += Trigger;
+    }
+
+    public void Trigger(GameObject obj)
+    {
+        if(!isInteractable())
+            return;
+            
+        Debug.Log("Triggerring some event");
     }
 
     public void StartEffect()

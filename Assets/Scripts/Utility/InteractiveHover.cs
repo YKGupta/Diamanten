@@ -4,7 +4,6 @@ using UnityEngine;
 public class InteractiveHover : MonoBehaviour
 {
     private IInteractionEffect effect;
-    public float range = 10f;
 
     private void Start()
     {
@@ -16,7 +15,7 @@ public class InteractiveHover : MonoBehaviour
 
     public void OnMouseOver_IH(GameObject obj)
     {
-        if(!isInteractable())
+        if(!effect.isInteractable())
         {
             effect.EndEffect();
             return;
@@ -27,17 +26,12 @@ public class InteractiveHover : MonoBehaviour
 
     public void OnMouseExit_IH(GameObject obj)
     {
-        if(!isInteractable())
+        if(!effect.isInteractable())
         {
             effect.EndEffect();
             return;
         }
             
         effect.EndEffect();
-    }
-
-    private bool isInteractable()
-    {
-        return enabled && Vector3.Distance(PlayerInfo.instance.GetPosition(), transform.position) <= range;
     }
 }

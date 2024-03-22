@@ -5,7 +5,6 @@ public class FindAndPlaceManager : MonoBehaviour
 {
     public Transform findItemsParent;
     public Transform placeItemsParent;
-    public float range = 10f;
 
     private Dictionary<GameObject, FindItemInfo> items;
     private FindItemInfo currentItem;
@@ -30,7 +29,7 @@ public class FindAndPlaceManager : MonoBehaviour
 
     public void SetFindItem(GameObject obj)
     {
-        if(currentItem != null || !isInteractable(obj.transform.position))
+        if(currentItem != null || !items[obj].findItem.isInteractable())
             return;
         
         currentItem = items[obj];
@@ -46,10 +45,5 @@ public class FindAndPlaceManager : MonoBehaviour
         
         currentItem = null;
         placeItem.OnItemReleased();
-    }
-
-    private bool isInteractable(Vector3 pos)
-    {
-        return Vector3.Distance(pos, PlayerInfo.instance.GetPosition()) <= range;
     }
 }
