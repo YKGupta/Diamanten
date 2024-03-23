@@ -4,17 +4,14 @@ using NaughtyAttributes;
 
 public class DragAndDropManager : MonoBehaviour
 {
-    public Transform dragAndDropParent;
-
-    [ReadOnly]
     public List<DragAndDropInfo> dragAndDropItems;
 
     private Dictionary<DragItem, DragAndDropInfo> lookup;
 
     private void Start()
     {
-        InitDragAndDropList();
-
+        InitEventHandlers();
+        
         lookup = new Dictionary<DragItem, DragAndDropInfo>();
 
         foreach(DragAndDropInfo i in dragAndDropItems)
@@ -66,7 +63,7 @@ public class DragAndDropManager : MonoBehaviour
 
         if(allItemsDroppedCorrectly)
         {
-            Debug.Log("All items were placed correctly! Task Completed!");
+            info.eventHandler.HandleEvent();
         }
     }
 
@@ -82,28 +79,11 @@ public class DragAndDropManager : MonoBehaviour
         dropItem.interactionUIGO.SetActive(false);
     }
 
-    [ContextMenu("Initialise Drag and Drop Info")]
-    private void InitDragAndDropList()
+    private void InitEventHandlers()
     {
-        dragAndDropItems = new List<DragAndDropInfo>();
-        for(int i = 0; i < dragAndDropParent.childCount; i++)
+        foreach(DragAndDropInfo i in dragAndDropItems)
         {
-            DragAndDropInfo temp = new DragAndDropInfo();
-            Transform dragAndDropItem = dragAndDropParent.GetChild(i);
-            for(int j = 0; j < dragAndDropItem.childCount; j++)
-            {
-                DragItem dragItem = dragAndDropItem.GetChild(j).GetComponent<DragItem>();
-                DropItem dropItem = dragAndDropItem.GetChild(j).GetComponent<DropItem>();
-                if(dragItem != null)
-                {
-                    temp.dragItems.Add(dragItem);
-                }
-                else
-                {
-                    temp.dropItems.Add(dropItem);
-                }
-            }
-            dragAndDropItems.Add(temp);
+            i.eventHandler = i.eventHandlerGO.GetComponent<IEventHandler>();
         }
     }
 }

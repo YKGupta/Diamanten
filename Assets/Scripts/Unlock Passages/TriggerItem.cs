@@ -8,12 +8,16 @@ public class TriggerItem : MonoBehaviour, IInteractionEffect
     [BoxGroup("Trigger Item Specifics")]
     [Range(0f, 50f)]
     public float range = 10f;
+    [BoxGroup("Trigger Item Specifics")]
+    public GameObject eventHandlerGO;
 
     private MouseEvents mouseEvents;
+    private IEventHandler eventHandler;
 
     private void Start()
     {
         mouseEvents = GetComponent<MouseEvents>();
+        eventHandler = eventHandlerGO.GetComponent<IEventHandler>();
         mouseEvents.onMouseDown += Trigger;
     }
 
@@ -22,7 +26,7 @@ public class TriggerItem : MonoBehaviour, IInteractionEffect
         if(!isInteractable())
             return;
             
-        Debug.Log("Triggerring some event");
+        eventHandler.HandleEvent();
     }
 
     public void StartEffect()

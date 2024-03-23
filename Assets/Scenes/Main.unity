@@ -622,7 +622,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &298948456
 Transform:
   m_ObjectHideFlags: 0
@@ -1479,7 +1479,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6822a67c3083cb468f9cab0dc58c995, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dragAndDropParent: {fileID: 636943379}
   dragAndDropItems:
   - dragItems:
     - {fileID: 2045250009}
@@ -1488,6 +1487,7 @@ MonoBehaviour:
     - {fileID: 617433625}
     - {fileID: 1787061804}
     - {fileID: 331640858}
+    eventHandlerGO: {fileID: 636780119}
 --- !u!4 &431971073
 Transform:
   m_ObjectHideFlags: 0
@@ -1857,6 +1857,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactionUIGO: {fileID: 431993527}
   range: 10
+  eventHandlerGO: {fileID: 636780119}
 --- !u!114 &568376644
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1869,7 +1870,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca682f60be13b5e40aa2709c40b97718, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  range: 10
 --- !u!114 &568376645
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1915,7 +1915,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 607330e2780fb7a4e9fa16bb06961508, type: 2}
+  - {fileID: 2100000, guid: 353a6d3f621c5ac49adbe441572c26ae, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2231,7 +2231,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca682f60be13b5e40aa2709c40b97718, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  range: 10
 --- !u!114 &620802967
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2245,6 +2244,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactionUIGO: {fileID: 1039073934}
+  range: 10
 --- !u!114 &620802968
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2366,7 +2366,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   findItemsParent: {fileID: 582340732}
   placeItemsParent: {fileID: 399438474}
-  range: 10
 --- !u!1 &636780119
 GameObject:
   m_ObjectHideFlags: 0
@@ -2380,6 +2379,7 @@ GameObject:
   - component: {fileID: 636780123}
   - component: {fileID: 636780122}
   - component: {fileID: 636780121}
+  - component: {fileID: 636780125}
   m_Layer: 0
   m_Name: Event
   m_TagString: Untagged
@@ -2485,6 +2485,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 636780119}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &636780125
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 636780119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55585a1ab99b8394abc17a7b58c14a46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggerName: Trigger
 --- !u!1 &636943378
 GameObject:
   m_ObjectHideFlags: 0
@@ -3635,7 +3648,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca682f60be13b5e40aa2709c40b97718, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  range: 10
 --- !u!114 &902747101
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4663,7 +4675,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca682f60be13b5e40aa2709c40b97718, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  range: 10
 --- !u!114 &1455782210
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4752,6 +4763,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactionUIGO: {fileID: 1261614481}
+  range: 10
 --- !u!1 &1483507657
 GameObject:
   m_ObjectHideFlags: 0
@@ -4878,7 +4890,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca682f60be13b5e40aa2709c40b97718, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  range: 10
 --- !u!114 &1534620137
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4892,6 +4903,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactionUIGO: {fileID: 2131362924}
+  range: 10
 --- !u!114 &1534620138
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5450,6 +5462,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactionUIGO: {fileID: 1836774403}
+  range: 10
 --- !u!114 &1631635426
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5537,7 +5550,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca682f60be13b5e40aa2709c40b97718, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  range: 10
 --- !u!1 &1655479355
 GameObject:
   m_ObjectHideFlags: 0
@@ -6543,7 +6555,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca682f60be13b5e40aa2709c40b97718, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  range: 10
 --- !u!1 &2057329558
 GameObject:
   m_ObjectHideFlags: 0
