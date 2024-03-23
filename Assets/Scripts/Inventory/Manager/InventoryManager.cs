@@ -69,6 +69,8 @@ public class InventoryManager : MonoBehaviour
         PlayerManager.instance.isPlayerAllowedToMove = !state;
         PlayerManager.instance.isPlayerAllowedToLook = !state;
 
+        NotesManager.instance.isPlayerAllowedToOpenNotebook = !state;
+
         Cursor.lockState = state ? CursorLockMode.None : CursorLockMode.Locked;
 
         inventoryGO.SetActive(state);
