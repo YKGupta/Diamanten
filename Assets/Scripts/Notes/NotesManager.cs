@@ -19,6 +19,8 @@ public class NotesManager : MonoBehaviour
     public GameObject viewNotePanelUIGO;
     [BoxGroup("UI")]
     public Image viewNoteImage;
+    [BoxGroup("UI")]
+    public Image viewZoomedNoteImage;
 
     [ReadOnly]
     public List<NoteItem> noteItems;
@@ -90,6 +92,7 @@ public class NotesManager : MonoBehaviour
         
         UI_Initialiser ui = btn.GetComponent<UI_Initialiser>();
         viewNoteImage.sprite = ui.GetImage().sprite;
+        viewZoomedNoteImage.sprite = ui.GetImage().sprite;
 
         notebookScrollViewGO.SetActive(false);
         viewNotePanelUIGO.SetActive(true);
