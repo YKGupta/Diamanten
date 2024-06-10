@@ -913,7 +913,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!1001 &3390368866067106983
+--- !u!1001 &2998706150579986214
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -923,7 +923,7 @@ PrefabInstance:
     - target: {fileID: 2579554699196126846, guid: ed91f8d1823a3854ca328ec357babf6b,
         type: 3}
       propertyPath: m_Name
-      value: Character GFX
+      value: Character Model
       objectReference: {fileID: 0}
     - target: {fileID: 2920509559060958404, guid: ed91f8d1823a3854ca328ec357babf6b,
         type: 3}
@@ -933,22 +933,22 @@ PrefabInstance:
     - target: {fileID: 2920509559060958404, guid: ed91f8d1823a3854ca328ec357babf6b,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.1285789
+      value: 0.12857568
       objectReference: {fileID: 0}
     - target: {fileID: 2920509559060958404, guid: ed91f8d1823a3854ca328ec357babf6b,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.5
+      value: 1.497905
       objectReference: {fileID: 0}
     - target: {fileID: 2920509559060958404, guid: ed91f8d1823a3854ca328ec357babf6b,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -6.380565
+      value: -6.3794694
       objectReference: {fileID: 0}
     - target: {fileID: 2920509559060958404, guid: ed91f8d1823a3854ca328ec357babf6b,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2920509559060958404, guid: ed91f8d1823a3854ca328ec357babf6b,
         type: 3}
@@ -958,7 +958,7 @@ PrefabInstance:
     - target: {fileID: 2920509559060958404, guid: ed91f8d1823a3854ca328ec357babf6b,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2920509559060958404, guid: ed91f8d1823a3854ca328ec357babf6b,
         type: 3}
@@ -973,7 +973,7 @@ PrefabInstance:
     - target: {fileID: 2920509559060958404, guid: ed91f8d1823a3854ca328ec357babf6b,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: 180
       objectReference: {fileID: 0}
     - target: {fileID: 2920509559060958404, guid: ed91f8d1823a3854ca328ec357babf6b,
         type: 3}

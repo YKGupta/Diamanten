@@ -7,7 +7,7 @@ public class Flashlight : MonoBehaviour
     public KeyCode ToggleKey;
     [BoxGroup("Controls")]
     [ReadOnly]
-    public bool useLight = true;
+    public bool useLight = false;
     
     [BoxGroup("Settings")]
     public new Light light;
@@ -27,7 +27,7 @@ public class Flashlight : MonoBehaviour
     private void Start()
     {
         LightGO = light.gameObject;
-        useLight = true;
+        useLight = false;
         SetLight(false);
     }
 
