@@ -913,7 +913,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!1001 &2998706150579986214
+--- !u!1001 &2136635113227241227
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -923,7 +923,7 @@ PrefabInstance:
     - target: {fileID: 2579554699196126846, guid: ed91f8d1823a3854ca328ec357babf6b,
         type: 3}
       propertyPath: m_Name
-      value: Character Model
+      value: Model
       objectReference: {fileID: 0}
     - target: {fileID: 2920509559060958404, guid: ed91f8d1823a3854ca328ec357babf6b,
         type: 3}
@@ -933,17 +933,17 @@ PrefabInstance:
     - target: {fileID: 2920509559060958404, guid: ed91f8d1823a3854ca328ec357babf6b,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.12857568
+      value: 0.138
       objectReference: {fileID: 0}
     - target: {fileID: 2920509559060958404, guid: ed91f8d1823a3854ca328ec357babf6b,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.497905
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 2920509559060958404, guid: ed91f8d1823a3854ca328ec357babf6b,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -6.3794694
+      value: -6.349148
       objectReference: {fileID: 0}
     - target: {fileID: 2920509559060958404, guid: ed91f8d1823a3854ca328ec357babf6b,
         type: 3}
