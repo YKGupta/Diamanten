@@ -76,7 +76,7 @@ public class Path : MonoBehaviour
                 Gizmos.color = gizmoColor;
             else
                 Gizmos.color = initPointColor;
-            Gizmos.DrawSphere(t.position, .5f);
+            Gizmos.DrawSphere(t.position, .1f);
             Gizmos.color = Color.gray;
             if(prev != null)
             {

@@ -6,9 +6,9 @@ public class MannequinMovement : MonoBehaviour
 {
     public Path defaultPath;
     public NavMeshAgent agent;
-    [Range(1f, 10f)]
+    [Range(0f, 10f)]
     public float walkSpeed;
-    [Range(1f, 10f)]
+    [Range(0f, 10f)]
     public float runSpeed;
     public Animator gfxAnimator;
     public float animationSmoothTime = 0.2f;
@@ -29,7 +29,7 @@ public class MannequinMovement : MonoBehaviour
     {
         if(!useDefault)
             return;
-            
+        Debug.Log(defaultPath.GetDistanceFromWaypoint(transform.position));
         if(defaultPath.GetDistanceFromWaypoint(transform.position) <= agent.stoppingDistance)
         {
             MoveAgent(defaultPath.GetNextWayPoint().position, walkSpeed);
@@ -41,15 +41,15 @@ public class MannequinMovement : MonoBehaviour
         currentSpeed = speed;
         agent.speed = currentSpeed;
         agent.SetDestination(position);
-        float speedPercent = currentSpeed / runSpeed;
-        // gfxAnimator.SetFloat("speedPercent", speedPercent, animationSmoothTime, Time.deltaTime);
+        float speedPercent = currentSpeed == runSpeed ? 1f : 0.5f;
+        gfxAnimator.SetFloat("speedPercent", speedPercent);
     }
 
     public void StopAgent()
     {
         currentSpeed = 0;
-        float speedPercent = currentSpeed / runSpeed;
-        // gfxAnimator.SetFloat("speedPercent", speedPercent, animationSmoothTime, Time.deltaTime);
+        float speedPercent = currentSpeed == runSpeed ? 1f : 0.5f;
+        gfxAnimator.SetFloat("speedPercent", speedPercent);
         agent.ResetPath();
     }
 }

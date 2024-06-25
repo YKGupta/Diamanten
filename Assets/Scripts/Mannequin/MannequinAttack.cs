@@ -33,7 +33,7 @@ public class MannequinAttack : MonoBehaviour
         if(isAttacking)
             return;
             
-        animator.SetBool("isAttacking", true);
+        animator.SetTrigger("isAttacking");
         isAttacking = true;
     }
 
