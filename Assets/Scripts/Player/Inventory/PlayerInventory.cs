@@ -51,6 +51,6 @@ public class PlayerInventory : MonoBehaviour
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawSphere(collectPoint.position + collectPoint.forward * maxInteractionDistance, 1f);
+        Gizmos.DrawSphere(collectPoint.position + collectPoint.forward * maxInteractionDistance, 0.2f);
     }
 }

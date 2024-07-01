@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class PlayerInfo : MonoBehaviour
 {
+    public Transform center;
     public static PlayerInfo instance;
 
     private void Awake()
@@ -11,6 +12,6 @@ public class PlayerInfo : MonoBehaviour
 
     public Vector3 GetPosition()
     {
-        return transform.position;
+        return center.position;
     }
 }

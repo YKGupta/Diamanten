@@ -31,7 +31,7 @@ public class Lamp : MonoBehaviour, IInteractionEffect
 
     public void OnCollect(GameObject obj)
     {
-        if(!enabled)
+        if(!isInteractable())
             return;
 
         enabled = false;
@@ -77,6 +77,6 @@ public class Lamp : MonoBehaviour, IInteractionEffect
             return;
         
         Gizmos.color = Color.white;
-        Gizmos.DrawSphere(transform.position, range);
+        Gizmos.DrawWireSphere(transform.position, range);
     }
 }
