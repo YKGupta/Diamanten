@@ -7,6 +7,8 @@ public class PlayerMovement : MonoBehaviour
     [BoxGroup("Settings")]
     public CharacterController controller;
     [BoxGroup("Settings")]
+    public Animator animator;
+    [BoxGroup("Settings")]
     public float walkSpeed = 12f;
     [BoxGroup("Settings")]
     public float sprintSpeed = 16f;
@@ -51,6 +53,10 @@ public class PlayerMovement : MonoBehaviour
     [BoxGroup("Settings (Crouch)")]
     public Vector3 reducedPosition;
     [BoxGroup("Settings (Crouch)")]
+    public Transform playerGFX;
+    [BoxGroup("Settings (Crouch)")]
+    public Vector3 reducedGFXPosition;
+    [BoxGroup("Settings (Crouch)")]
     public Transform crouchHeadPoint;
     [BoxGroup("Settings (Crouch)")]
     public float crouchHeadRadius;
@@ -71,6 +77,7 @@ public class PlayerMovement : MonoBehaviour
     private float defaultFOV;
 
     private Vector3 initialPlayerCamPosition;
+    private Vector3 initialPlayerGFXPosition;
     private float startTime;
 
     private Vector3 velocity;
@@ -91,6 +98,7 @@ public class PlayerMovement : MonoBehaviour
         cam = Camera.main;
         defaultFOV = cam.fieldOfView;
         initialPlayerCamPosition = playerCam.localPosition;
+        initialPlayerGFXPosition = playerGFX.localPosition;
         isCrouching = false;
     }
 
@@ -148,6 +156,7 @@ public class PlayerMovement : MonoBehaviour
     {
         Vector3 direction = transform.forward * z + transform.right * x;
         controller.Move(speed * Time.deltaTime * direction);
+        animator.SetFloat("normalizedSpeed", controller.velocity.magnitude / sprintSpeed);
     }
 
     private void JumpPlayer()
@@ -205,22 +214,28 @@ public class PlayerMovement : MonoBehaviour
 
     public IEnumerator CrouchTransition(TimerInstance timer)
     {
-        Vector3 startPos = playerCam.localPosition;
-        Vector3 endPos = isCrouching ? reducedPosition : initialPlayerCamPosition;
+        Vector3 camStartPos = playerCam.localPosition;
+        Vector3 camEndPos = isCrouching ? reducedPosition : initialPlayerCamPosition;
+        Vector3 playerGFXStartPos = playerGFX.localPosition;
+        Vector3 playerGFXEndPos = isCrouching ? reducedGFXPosition : initialPlayerGFXPosition;
         int[] r = new int[2] {-1, 1};
         int sign = r[Random.Range(0, 2)];
         while(timer.NormalizedValue() < 1f)
         {
             float t = timer.NormalizedValue();
-            Vector3 instantaneousPos = playerCam.localPosition;
-            instantaneousPos.y = Mathf.Lerp(startPos.y, endPos.y, t);
-            instantaneousPos.x = startPos.x + crouchXAmplitude * Mathf.Sin(sign * t * Mathf.PI);
-            instantaneousPos.z = startPos.z + crouchZAmplitude * Mathf.Sin(t * Mathf.PI);
-            playerCam.localPosition = instantaneousPos;
+            Vector3 instantaneousCamPos = playerCam.localPosition;
+            Vector3 instantaneousGFXPos = playerGFX.localPosition;
+            instantaneousCamPos.y = Mathf.Lerp(camStartPos.y, camEndPos.y, t);
+            instantaneousGFXPos.y = Mathf.Lerp(playerGFXStartPos.y, playerGFXEndPos.y, t);
+            instantaneousCamPos.x = camStartPos.x + crouchXAmplitude * Mathf.Sin(sign * t * Mathf.PI);
+            instantaneousCamPos.z = camStartPos.z + crouchZAmplitude * Mathf.Sin(t * Mathf.PI);
+            playerCam.localPosition = instantaneousCamPos;
+            playerGFX.localPosition = instantaneousGFXPos;
             yield return null;
         }
 
-        playerCam.localPosition = endPos;
+        playerCam.localPosition = camEndPos;
+        playerGFX.localPosition = playerGFXEndPos;
 
         float f = isCrouching ? 0.5f : 2f;
 

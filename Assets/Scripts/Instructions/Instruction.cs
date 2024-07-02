@@ -13,6 +13,8 @@ public class Instruction
     [BoxGroup("Settings")]
     public bool activateAutomatically = false;
     [BoxGroup("Settings")]
+    public float delay = 2f;
+    [BoxGroup("Settings")]
     public bool slowDown = false;
     [ShowIf("slowDown")]
     [BoxGroup("Settings")]

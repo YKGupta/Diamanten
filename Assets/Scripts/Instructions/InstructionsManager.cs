@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 
 public class InstructionsManager : MonoBehaviour
@@ -33,8 +34,14 @@ public class InstructionsManager : MonoBehaviour
     {
         if(queue.Count > 0)
         {
-            queue.Peek().Activate();
-            StartCoroutine(queue.Dequeue().Update());
+            StartCoroutine(ActivateInstruction(queue.Dequeue()));
         }
+    }
+
+    private IEnumerator ActivateInstruction(Instruction instruction)
+    {
+        yield return new WaitForSeconds(instruction.delay);
+        instruction.Activate();
+        StartCoroutine(instruction.Update());
     }
 }

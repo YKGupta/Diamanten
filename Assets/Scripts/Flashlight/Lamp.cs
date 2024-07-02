@@ -13,6 +13,10 @@ public class Lamp : MonoBehaviour, IInteractionEffect
     public TwoBoneIKConstraint handIK;
     [BoxGroup("Settings")]
     public Animator fingersAnimator;
+    [BoxGroup("Settings")]
+    public PlayerLook playerLook;
+    [BoxGroup("Settings")]
+    public float playerRotationAmount;
     [BoxGroup("Interaction Settings")]
     [Range(0f, 10f)]
     public float range = 2f;
@@ -22,6 +26,8 @@ public class Lamp : MonoBehaviour, IInteractionEffect
     public bool showGizmos = false;
 
     private MouseEvents mouseEvents;
+    private Quaternion playerBodyInitialRot;
+    private Quaternion playerBodyFinalRot;
 
     private void Start()
     {
@@ -37,7 +43,10 @@ public class Lamp : MonoBehaviour, IInteractionEffect
         enabled = false;
         PlayerManager.instance.isPlayerAllowedToMove = false;
         PlayerManager.instance.isPlayerAllowedToCrouch = false;
+        PlayerManager.instance.isPlayerAllowedToLook = false;
         flashlight.useLight = true;
+        playerBodyInitialRot = playerLook.playerBody.rotation;
+        playerBodyFinalRot = Quaternion.Euler(playerLook.playerBody.eulerAngles + Vector3.up * playerRotationAmount);
         TimerInstance timer = Timer.instance.CreateTimer(moveHandToLampDuration, 1, "hand");
         timer.timerStart += MoveHand;
     }
@@ -47,14 +56,17 @@ public class Lamp : MonoBehaviour, IInteractionEffect
         while(!Mathf.Approximately(timer.NormalizedValue(), 1f))
         {
             handIK.weight = timer.NormalizedValue();
+            playerLook.playerBody.rotation = Quaternion.Lerp(playerBodyInitialRot, playerBodyFinalRot, timer.NormalizedValue());
             yield return null;
         }
         
         handIK.weight = 1f;
+        playerLook.playerBody.rotation = playerBodyFinalRot;
         fingersAnimator.SetTrigger("hold");
         transform.SetParent(handIK.transform);
         PlayerManager.instance.isPlayerAllowedToMove = true;
         PlayerManager.instance.isPlayerAllowedToCrouch = true;
+        PlayerManager.instance.isPlayerAllowedToLook = true;
     }
     public void StartEffect()
     {
