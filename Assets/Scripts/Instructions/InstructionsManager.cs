@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
@@ -6,12 +7,16 @@ public class InstructionsManager : MonoBehaviour
 {
     [Tooltip("Order determines the order of instructions display(for automatically activated Instructions)")]
     public Instruction[] instructions;
+    [Tooltip("These instructions are added to the queue on trigger basis")]
+    public Instruction[] triggerBasedInstructions;
 
     private Queue<Instruction> queue;
+    private HashSet<int> triggerInstructionsPresentInQueue;
 
     private void Start()
     {
         queue = new Queue<Instruction>();
+        triggerInstructionsPresentInQueue = new HashSet<int>();
 
         foreach(Instruction i in instructions)
         {
@@ -28,6 +33,22 @@ public class InstructionsManager : MonoBehaviour
         instruction.Deactivate();
         instruction.onEnd -= OnInstructionEnd;
         SetNextAutomaticInstruction();
+        int x = Array.IndexOf(triggerBasedInstructions, instruction);
+        if(x != -1)
+            triggerInstructionsPresentInQueue.Remove(x);
+    }
+
+    public void Enqueue(int index)
+    {
+        if(index >= triggerBasedInstructions.Length || triggerInstructionsPresentInQueue.Contains(index))
+            return;
+
+        triggerInstructionsPresentInQueue.Add(index);
+        queue.Enqueue(triggerBasedInstructions[index]);
+        triggerBasedInstructions[index].onEnd += OnInstructionEnd;
+        
+        if(queue.Count == 1)
+            SetNextAutomaticInstruction();
     }
 
     private void SetNextAutomaticInstruction()
