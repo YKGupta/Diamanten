@@ -1,11 +1,15 @@
 using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class TriggerEvents : MonoBehaviour
 {
     public event Action<Collider, GameObject> triggerEntered;
+    public UnityEvent enterUnityEvent;
     public event Action<Collider, GameObject> triggerStayed;
+    public UnityEvent stayUnityEvent;
     public event Action<Collider, GameObject> triggerExited;
+    public UnityEvent exitUnityEvent;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -13,6 +17,7 @@ public class TriggerEvents : MonoBehaviour
             return;
         
         triggerEntered?.Invoke(other, gameObject);
+        enterUnityEvent.Invoke();
     }
 
     private void OnTriggerStay(Collider other)
@@ -21,6 +26,7 @@ public class TriggerEvents : MonoBehaviour
             return;
         
         triggerStayed?.Invoke(other, gameObject);
+        stayUnityEvent.Invoke();
     }
 
     private void OnTriggerExit(Collider other)
@@ -29,5 +35,6 @@ public class TriggerEvents : MonoBehaviour
             return;
         
         triggerExited?.Invoke(other, gameObject);
+        exitUnityEvent.Invoke();
     }
 }

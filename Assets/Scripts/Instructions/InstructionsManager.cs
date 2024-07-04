@@ -51,6 +51,13 @@ public class InstructionsManager : MonoBehaviour
             SetNextAutomaticInstruction();
     }
 
+    public void NotifyEndOfInstruction(int index)
+    {
+        if(index >= triggerBasedInstructions.Length || !triggerInstructionsPresentInQueue.Contains(index))
+            return;
+        triggerBasedInstructions[index].NotifyEndOfInstruction();
+    }
+
     private void SetNextAutomaticInstruction()
     {
         if(queue.Count > 0)

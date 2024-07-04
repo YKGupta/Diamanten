@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class MouseEvents : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class MouseEvents : MonoBehaviour
     public event Action<GameObject> onMouseExit;
     public event Action<GameObject> onMouseDrag;
     public event Action<GameObject> onMouseDown;
+    public UnityEvent mouseDownUnityEvent;
     public event Action<GameObject> onMouseUp;
 
     private void OnMouseEnter()
@@ -28,6 +30,7 @@ public class MouseEvents : MonoBehaviour
     private void OnMouseDown()
     {
         onMouseDown?.Invoke(gameObject);
+        mouseDownUnityEvent.Invoke();
     }
 
     private void OnMouseDrag()

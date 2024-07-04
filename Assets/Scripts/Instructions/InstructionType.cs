@@ -1,5 +1,6 @@
 public enum InstructionType
 {
     InputBound,
-    TimeBound
+    TimeBound,
+    TriggerBound
 }

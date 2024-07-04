@@ -47,6 +47,9 @@ public class Instruction
 
     public IEnumerator Update()
     {
+        if(type != InstructionType.InputBound && type != InstructionType.TimeBound)
+            yield break;
+
         while(active)
         {
             switch(type)
@@ -55,7 +58,7 @@ public class Instruction
                 {
                     foreach(KeyCode key in keys)
                         if(Input.GetKeyDown(key))
-                            onEnd?.Invoke(this);
+                            NotifyEndOfInstruction();
                     break;
                 }
                 case InstructionType.TimeBound:
@@ -63,12 +66,17 @@ public class Instruction
                     duration -= Time.deltaTime;
 
                     if(duration <= 0f)
-                        onEnd?.Invoke(this);
+                        NotifyEndOfInstruction();
                     break;
                 }
             }
             yield return null;
         }
+    }
+
+    public void NotifyEndOfInstruction()
+    {
+        onEnd?.Invoke(this);
     }
 
     public void Deactivate()
