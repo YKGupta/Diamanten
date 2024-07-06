@@ -5,21 +5,21 @@ using NaughtyAttributes;
 
 public class NotesManager : MonoBehaviour
 {
-    [BoxGroup("Input")]
+    [Foldout("Input")]
     public KeyCode notebookViewKey;
-    [BoxGroup("UI")]
+    [Foldout("UI")]
     public GameObject notebookUIGO;
-    [BoxGroup("UI")]
+    [Foldout("UI")]
     public Transform noteUIContentParent;
-    [BoxGroup("UI")]
+    [Foldout("UI")]
     public GameObject noteUIPrefab;
-    [BoxGroup("UI")]
+    [Foldout("UI")]
     public GameObject notebookScrollViewGO;
-    [BoxGroup("UI")]
+    [Foldout("UI")]
     public GameObject viewNotePanelUIGO;
-    [BoxGroup("UI")]
+    [Foldout("UI")]
     public Image viewNoteImage;
-    [BoxGroup("UI")]
+    [Foldout("UI")]
     public Image viewZoomedNoteImage;
 
     [ReadOnly]

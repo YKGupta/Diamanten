@@ -4,8 +4,12 @@ using NaughtyAttributes;
 public class NoteItem : MonoBehaviour, IInteractionEffect
 {
     [BoxGroup("UI")]
+    [HideIf("isAutomaticallyCollected")]
     public GameObject interactionUIGO;
     [BoxGroup("Note Item Specifics")]
+    public bool isAutomaticallyCollected = false;
+    [BoxGroup("Note Item Specifics")]
+    [HideIf("isAutomaticallyCollected")]
     [Range(0f, 15f)]
     public float range = 2f;
     [BoxGroup("Note Item Specifics")]
@@ -15,6 +19,9 @@ public class NoteItem : MonoBehaviour, IInteractionEffect
 
     private void Start()
     {
+        if(isAutomaticallyCollected)
+            return;
+
         mouseEvents = GetComponent<MouseEvents>();
         mouseEvents.onMouseDown += CollectNote;
     }
@@ -41,6 +48,6 @@ public class NoteItem : MonoBehaviour, IInteractionEffect
 
     public bool isInteractable()
     {
-        return enabled && Vector3.Distance(transform.position, PlayerInfo.instance.GetPosition()) <= range;
+        return enabled && (isAutomaticallyCollected || Vector3.Distance(transform.position, PlayerInfo.instance.GetPosition()) <= range);
     }
 }

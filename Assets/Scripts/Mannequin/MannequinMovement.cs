@@ -29,7 +29,6 @@ public class MannequinMovement : MonoBehaviour
     {
         if(!useDefault)
             return;
-        Debug.Log(defaultPath.GetDistanceFromWaypoint(transform.position));
         if(defaultPath.GetDistanceFromWaypoint(transform.position) <= agent.stoppingDistance)
         {
             MoveAgent(defaultPath.GetNextWayPoint().position, walkSpeed);

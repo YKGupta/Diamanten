@@ -12,11 +12,13 @@ public class InstructionsManager : MonoBehaviour
 
     private Queue<Instruction> queue;
     private HashSet<int> triggerInstructionsPresentInQueue;
+    private bool isAnInstructionBeingDisplayed = false;
 
     private void Start()
     {
         queue = new Queue<Instruction>();
         triggerInstructionsPresentInQueue = new HashSet<int>();
+        isAnInstructionBeingDisplayed = false;
 
         foreach(Instruction i in instructions)
         {
@@ -32,6 +34,7 @@ public class InstructionsManager : MonoBehaviour
     {
         instruction.Deactivate();
         instruction.onEnd -= OnInstructionEnd;
+        isAnInstructionBeingDisplayed = false;
         SetNextAutomaticInstruction();
         int x = Array.IndexOf(triggerBasedInstructions, instruction);
         if(x != -1)
@@ -47,7 +50,7 @@ public class InstructionsManager : MonoBehaviour
         queue.Enqueue(triggerBasedInstructions[index]);
         triggerBasedInstructions[index].onEnd += OnInstructionEnd;
         
-        if(queue.Count == 1)
+        if(queue.Count == 1 && !isAnInstructionBeingDisplayed)
             SetNextAutomaticInstruction();
     }
 
@@ -68,6 +71,7 @@ public class InstructionsManager : MonoBehaviour
 
     private IEnumerator ActivateInstruction(Instruction instruction)
     {
+        isAnInstructionBeingDisplayed = true;
         yield return new WaitForSeconds(instruction.delay);
         instruction.Activate();
         StartCoroutine(instruction.Update());
