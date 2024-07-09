@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 using NaughtyAttributes;
 
 public class NotesManager : MonoBehaviour
@@ -21,6 +22,9 @@ public class NotesManager : MonoBehaviour
     public Image viewNoteImage;
     [Foldout("UI")]
     public Image viewZoomedNoteImage;
+
+    [Foldout("Events")]
+    public UnityEvent onCollectNote;
 
     [ReadOnly]
     public List<NoteItem> noteItems;
@@ -59,6 +63,7 @@ public class NotesManager : MonoBehaviour
     public void AddNote(NoteItem item)
     {
         noteItems.Add(item);
+        onCollectNote.Invoke();
 
         GameObject newNote = Instantiate(noteUIPrefab, noteUIContentParent);
 
