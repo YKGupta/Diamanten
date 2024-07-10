@@ -1,7 +1,7 @@
 using UnityEngine;
 using NaughtyAttributes;
 
-public class MannequinChase : MonoBehaviour
+public class MannequinChase : MonoBehaviour, ITargetStateHandler
 {
     public PlayerSafe playerSafe;
     public MannequinMovement movement;
@@ -65,5 +65,10 @@ public class MannequinChase : MonoBehaviour
     private float GetRandomInterval()
     {
         return Random.Range(minInterval, maxInterval);
+    }
+
+    public TargetState GetState()
+    {
+        return isChasing ? TargetState.Engaged : TargetState.Idle;
     }
 }
