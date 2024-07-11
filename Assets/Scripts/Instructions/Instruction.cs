@@ -33,6 +33,8 @@ public class Instruction
     [HideInInspector]
     public event Action<Instruction> onEnd;
 
+    private float currentDuration;
+
     private bool active = false;
 
     public void Activate()
@@ -41,6 +43,7 @@ public class Instruction
             Time.timeScale = timeScale;
         
         active = true;
+        currentDuration = duration;
         
         UI_GO.SetActive(true);
     }
@@ -63,9 +66,9 @@ public class Instruction
                 }
                 case InstructionType.TimeBound:
                 {
-                    duration -= Time.deltaTime;
+                    currentDuration -= Time.deltaTime;
 
-                    if(duration <= 0f)
+                    if(currentDuration <= 0f)
                         NotifyEndOfInstruction();
                     break;
                 }
