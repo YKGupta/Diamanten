@@ -5,10 +5,17 @@ public class MannequinChase : MonoBehaviour, ITargetStateHandler
 {
     public PlayerSafe playerSafe;
     public MannequinMovement movement;
+    public Flashlight playerFlashlight;
+    [Tooltip("By what factors must the timeToInterval be reduced every frame the light is used by the player.")]
+    public float reductionMultiplier = 3f;
+    [Tooltip("At what distance from player, should the mannequin start chasing if not already due to timeToInterval")]
+    public float chaseRange = 5f;
     [Range(0f, 100f)]
     public float minInterval = 50f;
     [Range(0f, 600f)]
     public float maxInterval = 500f;
+
+    public bool showGizmos;
 
     [ReadOnly]
     public float timeToInterval;
@@ -28,7 +35,7 @@ public class MannequinChase : MonoBehaviour, ITargetStateHandler
 
     private void Chase()
     {
-        if(timeToInterval <= 0f)
+        if(timeToInterval <= 0f || isPlayerWithinRange())
         {
             if(!isChasing)
             {
@@ -49,7 +56,7 @@ public class MannequinChase : MonoBehaviour, ITargetStateHandler
         }
 
         if(!isChasing)
-            timeToInterval -= Time.deltaTime;
+            timeToInterval -= Time.deltaTime * (playerFlashlight.light.gameObject.activeSelf ? reductionMultiplier : 1);
     }
 
     public void SetNextInterval()
@@ -65,6 +72,19 @@ public class MannequinChase : MonoBehaviour, ITargetStateHandler
     private float GetRandomInterval()
     {
         return Random.Range(minInterval, maxInterval);
+    }
+
+    private bool isPlayerWithinRange()
+    {
+        return Vector3.Distance(transform.position, PlayerInfo.instance.center.position) <= chaseRange;
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        if(!showGizmos)
+            return;
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, chaseRange);
     }
 
     public TargetState GetState()
