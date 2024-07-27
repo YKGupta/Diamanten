@@ -22,6 +22,8 @@ public class PlayerMovement : MonoBehaviour
     public float gravity = -9.81f;
     [BoxGroup("Settings")]
     public float jumpHeight = 5f;
+    [BoxGroup("Settings (Sounds)")]
+    public float stepLength = 2;
     [BoxGroup("Settings (Sprint)")]
     public PeakSyncMeter peakSyncMeter;
     [BoxGroup("Settings (Sprint)")]
@@ -72,6 +74,11 @@ public class PlayerMovement : MonoBehaviour
     public float speed;
     private float prevFrameSpeed;
 
+    [ReadOnly]
+    public float stepCycle;
+    [ReadOnly]
+    public float nextStep;
+
     private bool prevFrameWasGoingToMove;
 
     private float defaultFOV;
@@ -86,6 +93,7 @@ public class PlayerMovement : MonoBehaviour
     private Camera cam;
 
     private bool isCrouching;
+    private bool wasGrounded;
 
     private void Awake()
     {
@@ -100,6 +108,7 @@ public class PlayerMovement : MonoBehaviour
         initialPlayerCamPosition = playerCam.localPosition;
         initialPlayerGFXPosition = playerGFX.localPosition;
         isCrouching = false;
+        stepCycle = 0f;
     }
 
     private void Update()
@@ -138,6 +147,14 @@ public class PlayerMovement : MonoBehaviour
         {
             velocity.y = -2f;
         }
+
+        if(!wasGrounded && isGrounded)
+        {
+            // Landing from a jump or fell off from somewhere
+            SoundManager.PlaySound(SoundType.Landing);
+        }
+
+        wasGrounded = isGrounded;
     }
 
     private void GizmosAndEvents(bool isGoingToMove)
@@ -157,6 +174,16 @@ public class PlayerMovement : MonoBehaviour
         Vector3 direction = transform.forward * z + transform.right * x;
         controller.Move(speed * Time.deltaTime * direction);
         animator.SetFloat("normalizedSpeed", controller.velocity.magnitude / sprintSpeed);
+        bool isGoingToMove = x != 0 || z != 0;
+        if(isGoingToMove && isGrounded)
+        {
+            // Progress the step cycle
+            stepCycle += controller.velocity.magnitude * Time.deltaTime;
+            if(stepCycle < nextStep)
+                return;
+            nextStep = stepCycle + stepLength;
+            SoundManager.PlaySound(SoundType.Walking);
+        }
     }
 
     private void JumpPlayer()
@@ -169,11 +196,11 @@ public class PlayerMovement : MonoBehaviour
         if(jumpKeyPressed)
         {
             playerEvents.InvokeJumped(this);
-        }
-
-        if(jumpKeyPressed && isGrounded)
-        {
-            velocity.y = Mathf.Sqrt(jumpHeight * -2 * gravity);
+            if(isGrounded)
+            {
+                velocity.y = Mathf.Sqrt(jumpHeight * -2 * gravity);
+                SoundManager.PlaySound(SoundType.Jumping);
+            }
         }
 
         velocity.y += gravity * Time.deltaTime;

@@ -8,6 +8,7 @@ public class FindItem : MonoBehaviour, IInteractionEffect
     [BoxGroup("Find Item Specifics")]
     [Range(0f, 50f)]
     public float range = 10f;
+    public bool showGizmos = false;
 
     public void OnItemCollected()
     {
@@ -27,5 +28,14 @@ public class FindItem : MonoBehaviour, IInteractionEffect
     public bool isInteractable()
     {
         return enabled && Vector3.Distance(transform.position, PlayerInfo.instance.GetPosition()) <= range;
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        if(!showGizmos)
+            return;
+            
+        Gizmos.color = Color.white;
+        Gizmos.DrawWireSphere(transform.position, range);
     }
 }

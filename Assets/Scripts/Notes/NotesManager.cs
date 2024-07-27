@@ -6,21 +6,21 @@ using NaughtyAttributes;
 
 public class NotesManager : MonoBehaviour
 {
-    [Foldout("Input")]
+    [BoxGroup("Input")]
     public KeyCode notebookViewKey;
-    [Foldout("UI")]
+    [BoxGroup("UI")]
     public GameObject notebookUIGO;
-    [Foldout("UI")]
+    [BoxGroup("UI")]
     public Transform noteUIContentParent;
-    [Foldout("UI")]
+    [BoxGroup("UI")]
     public GameObject noteUIPrefab;
-    [Foldout("UI")]
+    [BoxGroup("UI")]
     public GameObject notebookScrollViewGO;
-    [Foldout("UI")]
+    [BoxGroup("UI")]
     public GameObject viewNotePanelUIGO;
-    [Foldout("UI")]
+    [BoxGroup("UI")]
     public Image viewNoteImage;
-    [Foldout("UI")]
+    [BoxGroup("UI")]
     public Image viewZoomedNoteImage;
 
     [Foldout("Events")]
@@ -88,6 +88,8 @@ public class NotesManager : MonoBehaviour
         Cursor.lockState = state ? CursorLockMode.None : CursorLockMode.Locked;
 
         notebookUIGO.SetActive(state);
+
+        Time.timeScale = state ? 0f : 1f;
     }
 
     public void ViewNote(NoteItemButton btn)
