@@ -32,6 +32,9 @@ public class InstructionsManager : MonoBehaviour
 
     public void OnInstructionEnd(Instruction instruction)
     {
+        if(!instruction.IsActive())
+            return;
+
         instruction.Deactivate();
         instruction.onEnd -= OnInstructionEnd;
         isAnInstructionBeingDisplayed = false;

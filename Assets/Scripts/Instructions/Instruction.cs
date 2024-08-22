@@ -37,6 +37,11 @@ public class Instruction
 
     private bool active = false;
 
+    public bool IsActive()
+    {
+        return active;
+    }
+
     public void Activate()
     {
         if(slowDown)

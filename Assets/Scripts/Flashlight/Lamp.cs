@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 using NaughtyAttributes;
 using UnityEngine.Animations.Rigging;
 
@@ -25,6 +26,8 @@ public class Lamp : MonoBehaviour, IInteractionEffect
     [BoxGroup("Helpers")]
     public bool showGizmos = false;
 
+    public UnityEvent onLampCollect;
+
     private MouseEvents mouseEvents;
     private Quaternion playerBodyInitialRot;
     private Quaternion playerBodyFinalRot;
@@ -40,6 +43,7 @@ public class Lamp : MonoBehaviour, IInteractionEffect
         if(!isInteractable())
             return;
 
+        onLampCollect.Invoke();
         enabled = false;
         PlayerManager.instance.isPlayerAllowedToMove = false;
         PlayerManager.instance.isPlayerAllowedToCrouch = false;

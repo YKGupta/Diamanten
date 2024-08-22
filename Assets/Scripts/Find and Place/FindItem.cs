@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 using NaughtyAttributes;
 
 public class FindItem : MonoBehaviour, IInteractionEffect
@@ -9,10 +10,13 @@ public class FindItem : MonoBehaviour, IInteractionEffect
     [Range(0f, 50f)]
     public float range = 10f;
     public bool showGizmos = false;
+    [BoxGroup("Find Item Specifics")]
+    public UnityEvent onItemCollect;
 
     public void OnItemCollected()
     {
         gameObject.SetActive(false);
+        onItemCollect.Invoke();
     }
 
     public void StartEffect()
