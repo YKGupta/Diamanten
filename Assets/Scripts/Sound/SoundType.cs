@@ -3,5 +3,7 @@ public enum SoundType
     Walking,
     Running,
     Jumping,
-    Landing
+    Landing,
+    DoorOpen,
+    DoorClose
 }

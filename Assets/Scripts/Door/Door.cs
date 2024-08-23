@@ -4,36 +4,43 @@ using NaughtyAttributes;
 
 public class Door : MonoBehaviour
 {
-    [Foldout("Settings")]
+    [BoxGroup("Settings")]
     public TriggerEvents trigger;
-    [Foldout("Settings")]
+    [BoxGroup("Settings")]
     public UnityEvent startInstruction;
-    [Foldout("Settings")]
+    [BoxGroup("Settings")]
     public UnityEvent endInstruction;
 
-    [Foldout("Animation")]
+    [BoxGroup("Animation")]
     public Animator animator;
-    [Foldout("Animation")]
+    [BoxGroup("Animation")]
     public string boolName;
+
+    [BoxGroup("Door Events")]
+    public UnityEvent onDoorOpen;
+    [BoxGroup("Door Events")]
+    public UnityEvent onDoorClose;
 
     [ReadOnly]
     public bool isUnlocked;
 
     private bool isUnderProcessing;
     private bool isOpen;
+    private bool isTriggered;
 
     private void Start()
     {
         isUnlocked = false;
         isUnderProcessing = false;
         isOpen = false;
+        isTriggered = false;
         trigger.triggerEntered += TriggerEntered;
         trigger.triggerExited += TriggerExited;
     }
 
     private void Update()
     {
-        if(!isUnlocked || isUnderProcessing)
+        if(!isTriggered || !isUnlocked || isUnderProcessing)
             return;
 
         if(Input.GetKeyDown(KeyCode.E))
@@ -46,7 +53,9 @@ public class Door : MonoBehaviour
     {
         if(!isUnlocked)
             return;
-        
+
+        isTriggered = true;
+
         startInstruction.Invoke();
     }
 
@@ -54,6 +63,8 @@ public class Door : MonoBehaviour
     {
         if(!isUnlocked)
             return;
+
+        isTriggered = false;
 
         endInstruction.Invoke();
     }
@@ -72,6 +83,11 @@ public class Door : MonoBehaviour
     {
         isUnderProcessing = true;
         isOpen = !isOpen;
+        if(isOpen)
+            onDoorOpen.Invoke();
+        else
+            onDoorClose.Invoke();
+        SoundManager.PlaySound(isOpen ? SoundType.DoorOpen : SoundType.DoorClose);
         animator.SetBool(boolName, isOpen);
     }
 }
