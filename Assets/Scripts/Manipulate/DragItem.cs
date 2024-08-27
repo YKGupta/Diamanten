@@ -68,15 +68,14 @@ public class DragItem : MonoBehaviour, IInteractionEffect
             {
                 Debug.Log($"{name} was placed correctly!");
                 enabled = false;
+                startPos = transform.position;
+                endPos = hitInfo.collider.transform.position;
+                startRot = transform.rotation;
+                endRot = hitInfo.collider.transform.rotation;
+                Timer.instance.ClearAllTimers("drag");
+                TimerInstance timer = Timer.instance.CreateTimer(1, 1, "drag");
+                timer.timerStart += LerpPosition;
             }
-
-            startPos = transform.position;
-            endPos = hitInfo.collider.transform.position;
-            startRot = transform.rotation;
-            endRot = hitInfo.collider.transform.rotation;
-            Timer.instance.ClearAllTimers("drag");
-            TimerInstance timer = Timer.instance.CreateTimer(1, 1, "drag");
-            timer.timerStart += LerpPosition;
         }
 
         interactionUIGO.SetActive(false);
