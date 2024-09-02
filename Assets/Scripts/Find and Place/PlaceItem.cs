@@ -1,5 +1,6 @@
 using NaughtyAttributes;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PlaceItem : MonoBehaviour, IInteractionEffect
 {
@@ -8,10 +9,12 @@ public class PlaceItem : MonoBehaviour, IInteractionEffect
     [BoxGroup("Place Item Specifics")]
     [Range(0f, 50f)]
     public float range = 10f;
+    [BoxGroup("Place Item Specifics")]
+    public UnityEvent onItemPlaced;
 
     public void OnItemReleased()
     {
-        Debug.Log("Item Released!");
+        onItemPlaced.Invoke();
     }
 
     public void StartEffect()
