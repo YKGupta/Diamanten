@@ -66,7 +66,6 @@ public class DragItem : MonoBehaviour, IInteractionEffect
 
             if(currentId == correctId)
             {
-                Debug.Log($"{name} was placed correctly!");
                 enabled = false;
                 startPos = transform.position;
                 endPos = hitInfo.collider.transform.position;
