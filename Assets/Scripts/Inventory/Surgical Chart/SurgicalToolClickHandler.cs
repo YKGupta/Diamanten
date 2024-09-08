@@ -16,6 +16,8 @@ public class SurgicalToolClickHandler : MonoBehaviour, IInteractionEffect
     [BoxGroup("Settings")]
     public float range;
     [BoxGroup("Settings")]
+    public Texture emissionMap;
+    [BoxGroup("Settings")]
     [ReadOnly]
     public bool isPlaced;
 
@@ -54,6 +56,7 @@ public class SurgicalToolClickHandler : MonoBehaviour, IInteractionEffect
             Debug.LogError($"No item [{item.id}, {item.name}] exists!");
             return;
         }
+        EndEffect();
         InventoryManager.instance.RemoveItem(item, true, false);
         isPlaced = true;
         onToolPlaced?.Invoke(this);
@@ -62,15 +65,23 @@ public class SurgicalToolClickHandler : MonoBehaviour, IInteractionEffect
     public void StartEffect()
     {
         interactionUI.SetActive(true);
+        GetComponentInParent<SurgicalChartEffects>().Show(emissionMap, isPresent());
     }
 
     public void EndEffect()
     {
         interactionUI.SetActive(false);
+        GetComponentInParent<SurgicalChartEffects>().Reset();
     }
 
     public bool isInteractable()
     {
         return enabled && Vector3.Distance(transform.position, PlayerInfo.instance.GetPosition()) <= range;
+    }
+
+    private bool isPresent()
+    {
+        Item item = InventoryManager.instance.FindItem(id);
+        return item != null;
     }
 }
