@@ -14,6 +14,7 @@ public class PlaceItem : MonoBehaviour, IInteractionEffect
 
     public void OnItemReleased()
     {
+        EndEffect();
         onItemPlaced.Invoke();
     }
 
