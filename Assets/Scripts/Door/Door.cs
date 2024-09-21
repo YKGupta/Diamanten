@@ -17,6 +17,10 @@ public class Door : MonoBehaviour
     public string boolName;
 
     [BoxGroup("Door Events")]
+    public UnityEvent onDoorLockedEnter;
+    [BoxGroup("Door Events")]
+    public UnityEvent onDoorLockedExit;
+    [BoxGroup("Door Events")]
     public UnityEvent onDoorOpen;
     [BoxGroup("Door Events")]
     public UnityEvent onDoorClose;
@@ -52,7 +56,10 @@ public class Door : MonoBehaviour
     public void TriggerEntered(Collider other, GameObject obj)
     {
         if(!isUnlocked)
+        {
+            onDoorLockedEnter.Invoke();
             return;
+        }
 
         isTriggered = true;
 
@@ -62,7 +69,10 @@ public class Door : MonoBehaviour
     public void TriggerExited(Collider other, GameObject obj)
     {
         if(!isUnlocked)
+        {
+            onDoorLockedExit.Invoke();
             return;
+        }
 
         isTriggered = false;
 
