@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 using NaughtyAttributes;
 
 public class NoteItem : MonoBehaviour, IInteractionEffect
@@ -14,6 +15,8 @@ public class NoteItem : MonoBehaviour, IInteractionEffect
     public float range = 2f;
     [BoxGroup("Note Item Specifics")]
     public Sprite noteSprite;
+    [BoxGroup("Note Item Specifics")]
+    public UnityEvent onNoteCollect;
 
     private MouseEvents mouseEvents;
 
@@ -30,7 +33,8 @@ public class NoteItem : MonoBehaviour, IInteractionEffect
     {
         if(!isInteractable())
             return;
-            
+        
+        onNoteCollect.Invoke();
         NotesManager.instance.AddNote(this);
         gameObject.transform.SetParent(NotesManager.instance.transform);
         gameObject.SetActive(false);
