@@ -32,16 +32,31 @@ public class InstructionsManager : MonoBehaviour
 
     public void OnInstructionEnd(Instruction instruction)
     {
-        if(!instruction.IsActive())
+        int x = Array.IndexOf(triggerBasedInstructions, instruction);
+        bool wasInstructionActive = instruction.IsActive();
+        if(!wasInstructionActive && x == -1)
             return;
-
+        
         instruction.Deactivate();
         instruction.onEnd -= OnInstructionEnd;
-        isAnInstructionBeingDisplayed = false;
-        SetNextAutomaticInstruction();
-        int x = Array.IndexOf(triggerBasedInstructions, instruction);
+        if(wasInstructionActive)
+        {
+            isAnInstructionBeingDisplayed = false;
+            SetNextAutomaticInstruction();
+        }
         if(x != -1)
+        {
             triggerInstructionsPresentInQueue.Remove(x);
+            Queue<Instruction> temp = new Queue<Instruction>();
+            while(queue.Count != 0)
+            {
+                Instruction ins = queue.Dequeue();
+                if(ins == instruction)
+                    continue;
+                temp.Enqueue(ins);
+            }
+            queue = temp;
+        }
     }
 
     public void Enqueue(int index)
