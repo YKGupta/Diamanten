@@ -35,7 +35,7 @@ public class Drawer : MonoBehaviour, IInteractionEffect
 
     public void OnDrawerClicked(GameObject src)
     {
-        if(!isUnlocked)
+        if(!isUnlocked || !isInteractable())
             return;
         OnDrawerOpen.Invoke();
         EndEffect();
