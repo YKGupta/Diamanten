@@ -9,7 +9,7 @@ public class MannequinChase : MonoBehaviour, ITargetStateHandler
     [Tooltip("By what factors must the timeToInterval be reduced every frame the light is used by the player.")]
     public float reductionMultiplier = 3f;
     [Tooltip("At what distance from player, should the mannequin start chasing if not already due to timeToInterval")]
-    public float chaseRange = 5f;
+    public float chaseRange = 3f;
     [Range(0f, 100f)]
     public float minInterval = 50f;
     [Range(0f, 600f)]

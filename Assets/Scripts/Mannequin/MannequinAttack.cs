@@ -4,8 +4,6 @@ using NaughtyAttributes;
 [RequireComponent(typeof(MannequinChase))]
 public class MannequinAttack : MonoBehaviour
 {
-    [Range(0f, 10f)]
-    public float attackRange = 2f;
     public Animator animator;
     public PlayerHealth playerHealth;
 
@@ -49,6 +47,6 @@ public class MannequinAttack : MonoBehaviour
 
     private bool isAttackable()
     {
-        return mannequinChase.isChasing && Vector3.Distance(transform.position, PlayerInfo.instance.GetPosition()) <= attackRange;
+        return mannequinChase.isChasing && Vector3.Distance(transform.position, PlayerInfo.instance.GetPosition()) <= Constants.instance.MANNEQUIN_ATTACK_RANGE;
     }
 }

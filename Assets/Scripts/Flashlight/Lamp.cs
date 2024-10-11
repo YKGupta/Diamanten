@@ -18,9 +18,6 @@ public class Lamp : MonoBehaviour, IInteractionEffect
     public PlayerLook playerLook;
     [BoxGroup("Settings")]
     public float playerRotationAmount;
-    [BoxGroup("Interaction Settings")]
-    [Range(0f, 10f)]
-    public float range = 2f;
     [BoxGroup("UI")]
     public GameObject interactionUIGO;
     [BoxGroup("Helpers")]
@@ -84,7 +81,7 @@ public class Lamp : MonoBehaviour, IInteractionEffect
 
     public bool isInteractable()
     {
-        return enabled && Vector3.Distance(transform.position, PlayerInfo.instance.GetPosition()) <= range;
+        return enabled && Vector3.Distance(transform.position, PlayerInfo.instance.GetPosition()) <= Constants.instance.LAMP_COLLECT_RANGE;
     }
 
     private void OnDrawGizmos()
@@ -93,6 +90,6 @@ public class Lamp : MonoBehaviour, IInteractionEffect
             return;
         
         Gizmos.color = Color.white;
-        Gizmos.DrawWireSphere(transform.position, range);
+        Gizmos.DrawWireSphere(transform.position, Constants.instance.LAMP_COLLECT_RANGE);
     }
 }

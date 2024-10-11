@@ -14,8 +14,6 @@ public class SurgicalToolClickHandler : MonoBehaviour, IInteractionEffect
     [BoxGroup("Settings")]
     public GameObject interactionUI;
     [BoxGroup("Settings")]
-    public float range;
-    [BoxGroup("Settings")]
     public Texture emissionMap;
     [BoxGroup("Settings")]
     [ReadOnly]
@@ -76,7 +74,7 @@ public class SurgicalToolClickHandler : MonoBehaviour, IInteractionEffect
 
     public bool isInteractable()
     {
-        return enabled && Vector3.Distance(transform.position, PlayerInfo.instance.GetPosition()) <= range;
+        return enabled && Vector3.Distance(transform.position, PlayerInfo.instance.GetPosition()) <= Constants.instance.RANGE;
     }
 
     private bool isPresent()

@@ -3,7 +3,6 @@ using UnityEngine;
 public class PlayerInventory : MonoBehaviour
 {
     // public Animator animator;
-    public float maxInteractionDistance = 10f;
     public InventoryManager inventoryManager;
     public Transform collectPoint;
 
@@ -25,7 +24,7 @@ public class PlayerInventory : MonoBehaviour
 
     public void OnItemClick(Item item)
     {
-        if(Vector3.Distance(collectPoint.position, item.transform.position) > maxInteractionDistance || inventoryManager.inventoryGO.activeSelf)
+        if(Vector3.Distance(collectPoint.position, item.transform.position) > Constants.instance.PLAYER_INVENTORY_INTERACTION_RANGE || inventoryManager.inventoryGO.activeSelf)
             return;
 
         inventoryManager.AddItem(item);  
@@ -34,7 +33,7 @@ public class PlayerInventory : MonoBehaviour
 
     public void OnItemMouseEnter(Item item)
     {
-        if(Vector3.Distance(collectPoint.position, item.transform.position) > maxInteractionDistance || inventoryManager.inventoryGO.activeSelf)
+        if(Vector3.Distance(collectPoint.position, item.transform.position) > Constants.instance.PLAYER_INVENTORY_INTERACTION_RANGE || inventoryManager.inventoryGO.activeSelf)
         {
             item.interactionUIGO.SetActive(false);
             return;
@@ -51,6 +50,6 @@ public class PlayerInventory : MonoBehaviour
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawSphere(collectPoint.position + collectPoint.forward * maxInteractionDistance, 0.2f);
+        Gizmos.DrawSphere(collectPoint.position + collectPoint.forward * Constants.instance.PLAYER_INVENTORY_INTERACTION_RANGE, 0.2f);
     }
 }

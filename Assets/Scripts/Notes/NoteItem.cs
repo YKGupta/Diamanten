@@ -10,10 +10,6 @@ public class NoteItem : MonoBehaviour, IInteractionEffect
     [BoxGroup("Note Item Specifics")]
     public bool isAutomaticallyCollected = false;
     [BoxGroup("Note Item Specifics")]
-    [HideIf("isAutomaticallyCollected")]
-    [Range(0f, 15f)]
-    public float range = 2f;
-    [BoxGroup("Note Item Specifics")]
     public Sprite noteSprite;
     [BoxGroup("Note Item Specifics")]
     public UnityEvent onNoteCollect;
@@ -52,6 +48,6 @@ public class NoteItem : MonoBehaviour, IInteractionEffect
 
     public bool isInteractable()
     {
-        return enabled && (isAutomaticallyCollected || Vector3.Distance(transform.position, PlayerInfo.instance.GetPosition()) <= range);
+        return enabled && (isAutomaticallyCollected || Vector3.Distance(transform.position, PlayerInfo.instance.GetPosition()) <= Constants.instance.RANGE);
     }
 }

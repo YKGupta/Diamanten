@@ -7,8 +7,6 @@ public class Drawer : MonoBehaviour, IInteractionEffect
     [BoxGroup("Settings")]
     public GameObject interactionUIGO;
     [BoxGroup("Settings")]
-    public float range = 1.5f;
-    [BoxGroup("Settings")]
     public UnityEvent OnDrawerOpen;
     [BoxGroup("Settings")]
     public UnityEvent OnDrawerLockedHover;
@@ -63,6 +61,6 @@ public class Drawer : MonoBehaviour, IInteractionEffect
 
     public bool isInteractable()
     {
-        return enabled && Vector3.Distance(transform.position, PlayerInfo.instance.GetPosition()) <= range;
+        return enabled && Vector3.Distance(transform.position, PlayerInfo.instance.GetPosition()) <= Constants.instance.RANGE;
     }
 }
