@@ -27,9 +27,11 @@ public class Door : MonoBehaviour
 
     [ReadOnly]
     public bool isUnlocked;
+    [ReadOnly]
+    public bool isOpen;
+    [ReadOnly]
+    public bool isUnderProcessing;
 
-    private bool isUnderProcessing;
-    private bool isOpen;
     private bool isTriggered;
 
     private void Start()

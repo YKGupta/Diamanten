@@ -42,6 +42,9 @@ public class MannequinAttack : MonoBehaviour
 
     public void TakeDamage()
     {
+        if(!isAttackable())
+            return;
+            
         playerHealth.TakeDamage();
     }
 

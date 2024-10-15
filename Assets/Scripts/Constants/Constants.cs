@@ -12,6 +12,10 @@ public class Constants : MonoBehaviour
     public float MANNEQUIN_ATTACK_RANGE = 1.5f;
     [Range(0f, 5f)]
     public float PLAYER_INVENTORY_INTERACTION_RANGE = 1.25f;
+    [Range(0f, 5f)]
+    public float MANNEQUIN_SLEEP_DOOR_RANGE = 1.25f;
+    [Range(0f, 5f)]
+    public float MANNEQUIN_SLEEP_RANGE = 1.25f;
 
     public static Constants instance;
 
