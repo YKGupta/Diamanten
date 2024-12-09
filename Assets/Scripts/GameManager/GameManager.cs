@@ -11,4 +11,9 @@ public class GameManager : MonoBehaviour
     {
         onStart.Invoke();
     }
+
+    public void Quit()
+    {
+        Application.Quit();
+    }
 }
