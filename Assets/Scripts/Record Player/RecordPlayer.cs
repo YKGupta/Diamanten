@@ -22,7 +22,7 @@ public class RecordPlayer : MonoBehaviour, IInteractionEffect
     {
         if(!interactionUIGO.activeSelf || !Input.GetKeyDown(playKey) || isPlaying)
             return;
-        Debug.Log("Playing");
+        
         isPlaying = true;
         onRecordPlay?.Invoke(this);
     }

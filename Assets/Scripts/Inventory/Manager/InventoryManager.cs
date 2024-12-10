@@ -10,15 +10,6 @@ public class InventoryManager : MonoBehaviour
     public GameObject itemUIPrefab;
     [BoxGroup("UI")]
     public Transform itemsUIParent;
-    [BoxGroup("UI")]
-    public GameObject loadingScreenGO;
-
-    public KeyCode inventoryToggleKey;
-
-    [HideInInspector]
-    public bool isPlayerAllowedToOpenInventory;
-    [HideInInspector]
-    public Animator animator; // Set by PlayerInventory
 
     private List<Item> items;
 
@@ -32,49 +23,19 @@ public class InventoryManager : MonoBehaviour
     private void Start()
     {
         items = new List<Item>();
-        isPlayerAllowedToOpenInventory = true;
     }
 
-    private void Update()
-    {
-        if(!isPlayerAllowedToOpenInventory)
-            return;
-            
-        if(Input.GetKeyDown(inventoryToggleKey))
-        {
-            SetInventory(!inventoryGO.activeSelf);
-        }
-    }
-
-    public void SetInventory(bool state)
+    public void SetInventory()
     {
         ClearInventory();
-
-        if(state)
+        foreach(Item item in items)
         {
-            SetLoadingScreen(true);
-
-            foreach(Item item in items)
-            {
-                GameObject tempGO = Instantiate(itemUIPrefab, itemsUIParent);
-                tempGO.GetComponent<ItemButton>().SetItem(item);
-                UI_Initialiser temp = tempGO.GetComponent<UI_Initialiser>();
-                temp.SetText(item.name);
-                temp.SetImage(item.sprite);
-            }
-
-            SetLoadingScreen(false);
+            GameObject tempGO = Instantiate(itemUIPrefab, itemsUIParent);
+            tempGO.GetComponent<ItemButton>().SetItem(item);
+            UI_Initialiser temp = tempGO.GetComponent<UI_Initialiser>();
+            temp.SetText(item.name);
+            temp.SetImage(item.sprite);
         }
-
-        PlayerManager.instance.isPlayerAllowedToMove = !state;
-        PlayerManager.instance.isPlayerAllowedToLook = !state;
-
-        NotesManager.instance.isPlayerAllowedToOpenNotebook = !state;
-
-        Cursor.lockState = state ? CursorLockMode.None : CursorLockMode.Locked;
-
-        inventoryGO.SetActive(state);
-        // animator.SetBool("openInventory", state);
     }
 
     public void ClearInventory(bool removeItemsFromListAsWell = false)
@@ -88,19 +49,14 @@ public class InventoryManager : MonoBehaviour
             return;
     }
 
-    public void SetLoadingScreen(bool state, string text = "Loading...")
-    {
-        loadingScreenGO.SetActive(state);
-        UI_Initialiser temp = loadingScreenGO.GetComponent<UI_Initialiser>();
-        temp.SetText(text);
-    }
-
     public void AddItem(Item item)
     {
         items.Add(item);
         item.gameObject.GetComponent<Renderer>().enabled = false;
         item.gameObject.GetComponent<Collider>().enabled = false;
         item.enabled = false;
+
+        SetInventory();
     }
     
     public void RemoveItem(Item item, bool isUsed = false, bool showInventory = true)
@@ -110,7 +66,7 @@ public class InventoryManager : MonoBehaviour
         item.gameObject.GetComponent<Collider>().enabled = !isUsed;
         item.enabled = !isUsed;
 
-        SetInventory(showInventory);
+        SetInventory();
     }
 
     public Item FindItem(int id)

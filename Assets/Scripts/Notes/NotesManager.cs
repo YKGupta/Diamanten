@@ -29,9 +29,6 @@ public class NotesManager : MonoBehaviour
     [ReadOnly]
     public List<NoteItem> noteItems;
 
-    [HideInInspector]
-    public bool isPlayerAllowedToOpenNotebook;
-
     private List<GameObject> noteUIItems;
 
     public static NotesManager instance;
@@ -46,18 +43,6 @@ public class NotesManager : MonoBehaviour
     {
         noteItems = new List<NoteItem>();
         noteUIItems = new List<GameObject>();
-        isPlayerAllowedToOpenNotebook = true;
-    }
-
-    private void Update()
-    {
-        if(!isPlayerAllowedToOpenNotebook)
-            return;
-
-        if(Input.GetKeyDown(notebookViewKey))
-        {
-            ToggleNotebook();
-        }
     }
 
     public void AddNote(NoteItem item)
@@ -74,22 +59,6 @@ public class NotesManager : MonoBehaviour
         btn.onButtonClick += ViewNote;
 
         noteUIItems.Add(newNote);
-    }
-
-    public void ToggleNotebook()
-    {
-        bool state = !notebookUIGO.activeSelf;
-
-        PlayerManager.instance.isPlayerAllowedToMove = !state;
-        PlayerManager.instance.isPlayerAllowedToLook = !state;
-
-        InventoryManager.instance.isPlayerAllowedToOpenInventory = !state;
-
-        Cursor.lockState = state ? CursorLockMode.None : CursorLockMode.Locked;
-
-        notebookUIGO.SetActive(state);
-
-        Time.timeScale = state ? 0f : 1f;
     }
 
     public void ViewNote(NoteItemButton btn)
