@@ -22,13 +22,26 @@ public class MenuManager : MonoBehaviour
     [BoxGroup("Settings")]
     public GameObject objectiveGO;
 
+    [ReadOnly]
+    public NavLink currentState = NavLink.PauseMenu;
+
     private void Update()
     {
         bool pauseKeyPressed = Input.GetKeyDown(pauseKey), inventoryKeyPressed = Input.GetKeyDown(inventoryKey), notebookKeyPressed = Input.GetKeyDown(notebookKey), objectiveKeyPressed = Input.GetKeyDown(objectiveKey);
         if(!pauseKeyPressed && !inventoryKeyPressed && !notebookKeyPressed && !objectiveKeyPressed)
             return;
         NavLink target = pauseKeyPressed ? NavLink.PauseMenu : inventoryKeyPressed ? NavLink.Inventory : notebookKeyPressed ? NavLink.Notebook : NavLink.Objective;
-        Set(!menuGO.activeSelf, target);
+        // I want the system to be as follows:
+        // Let (state, menu, input), where state = current state of the menu(on/off), menu = currently opened menu(is state is true), input = key pressed
+        //      state       menu            input       Output
+        //      on          any             PauseKey    off
+        //      off         nil             input       on(input)
+        //      on          input           !PauseKey   off
+        //      on          !input          !PauseKey   on(input menu)
+        if(pauseKeyPressed)
+            Set(!menuGO.activeSelf, target);
+        else
+            Set(!menuGO.activeSelf ? true : currentState != target, target);
     }
 
     public void Set(bool state, NavLink target)
@@ -52,7 +65,6 @@ public class MenuManager : MonoBehaviour
         inventoryGO.SetActive(false);
         notebookGO.SetActive(false);
         objectiveGO.SetActive(false);
-
         switch(target)
         {
             case NavLink.PauseMenu:
@@ -76,5 +88,7 @@ public class MenuManager : MonoBehaviour
                 break;
             }
         }
+
+        currentState = target;
     }
 }
