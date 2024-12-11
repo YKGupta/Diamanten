@@ -44,6 +44,11 @@ public class MenuManager : MonoBehaviour
             Set(!menuGO.activeSelf ? true : currentState != target, target);
     }
 
+    public void ResumeButton()
+    {
+        Set(false, NavLink.PauseMenu);
+    }
+
     public void Set(bool state, NavLink target)
     {
         PlayerManager.instance.isPlayerAllowedToMove = !state;

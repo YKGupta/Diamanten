@@ -3,13 +3,20 @@ using UnityEngine;
 public class PlayerLook : MonoBehaviour
 {
     public Transform playerBody;
-    public float mouseSensitivity = 100f;
+    private float mouseSensitivity;
 
     private float xRotation = 0f;
 
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
+        mouseSensitivity = PlayerPrefs.GetFloat("mouseSensitivity", Constants.instance.DEFAULT_MOUSE_SENSITIVITY);
+        SettingsManager.instance.settingsUpdated += OnSettingsUpdate;
+    }
+
+    public void OnSettingsUpdate()
+    {
+        mouseSensitivity = PlayerPrefs.GetFloat("mouseSensitivity", Constants.instance.DEFAULT_MOUSE_SENSITIVITY);
     }
 
     private void Update()

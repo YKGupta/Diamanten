@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class Constants : MonoBehaviour
 {
+    [Range(10f, 500f)]
+    public float DEFAULT_MOUSE_SENSITIVITY = 100f;
     [Range(0f, 10f)]
     public float RANGE = 1.5f;
     [Range(0f, 10f)]
