@@ -1,10 +1,13 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class AssetManager : MonoBehaviour
 {
     [Tooltip("List of all the sounds to be used by the game")]
     public Sound[] sounds;
+    [Tooltip("Audio Mixer to be used by the sound manager")]
+    public AudioMixerGroup audioMixer;
 
     [HideInInspector]
     public Dictionary<SoundType, Sound> map;

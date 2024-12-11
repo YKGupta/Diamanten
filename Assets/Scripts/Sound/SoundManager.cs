@@ -19,6 +19,7 @@ public static class SoundManager
         {
             oneShotSoundGO = new GameObject("Sound Source");
             oneShotSoundGO.AddComponent<AudioSource>();
+            oneShotSoundGO.GetComponent<AudioSource>().outputAudioMixerGroup = AssetManager.instance.audioMixer;
         }
         AudioSource source = oneShotSoundGO.GetComponent<AudioSource>();
         source.volume = sound.volume;
