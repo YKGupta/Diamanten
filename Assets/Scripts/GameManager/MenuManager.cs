@@ -1,5 +1,8 @@
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using NaughtyAttributes;
+using TMPro;
 
 public class MenuManager : MonoBehaviour
 {
@@ -21,12 +24,31 @@ public class MenuManager : MonoBehaviour
     public GameObject notebookGO;
     [BoxGroup("Settings")]
     public GameObject objectiveGO;
+    [BoxGroup("Quit Settings")]
+    public int menuSceneIndex = 0;
+    [BoxGroup("Quit Settings")]
+    public Slider loadingSlider;
+    [BoxGroup("Quit Settings")]
+    public TMP_Text loadingPercentageText;
+    [BoxGroup("Quit Settings")]
+    public string loadingFormat = "{0:F1}%";
 
     [ReadOnly]
     public NavLink currentState = NavLink.PauseMenu;
 
+    private AsyncOperation operation;
+
     private void Update()
     {
+        if(operation != null)
+        {
+            float clampedValue = operation.progress / 0.9f;
+            if(loadingSlider != null)
+                loadingSlider.value = clampedValue;
+            if(loadingPercentageText.text != null)
+                loadingPercentageText.text = string.Format(loadingFormat, clampedValue * 100f);
+            return;
+        }
         bool pauseKeyPressed = Input.GetKeyDown(pauseKey), inventoryKeyPressed = Input.GetKeyDown(inventoryKey), notebookKeyPressed = Input.GetKeyDown(notebookKey), objectiveKeyPressed = Input.GetKeyDown(objectiveKey);
         if(!pauseKeyPressed && !inventoryKeyPressed && !notebookKeyPressed && !objectiveKeyPressed)
             return;
@@ -41,12 +63,19 @@ public class MenuManager : MonoBehaviour
         if(pauseKeyPressed)
             Set(!menuGO.activeSelf, target);
         else
-            Set(!menuGO.activeSelf ? true : currentState != target, target);
+            Set(!menuGO.activeSelf || currentState != target, target);
     }
 
     public void ResumeButton()
     {
         Set(false, NavLink.PauseMenu);
+    }
+
+    public void QuitButton()
+    {
+        if(operation != null)
+            return;
+        operation = SceneManager.LoadSceneAsync(menuSceneIndex);
     }
 
     public void Set(bool state, NavLink target)
