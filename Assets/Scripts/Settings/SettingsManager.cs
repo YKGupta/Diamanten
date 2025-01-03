@@ -35,4 +35,11 @@ public class SettingsManager : MonoBehaviour
         PlayerPrefs.Save();
         settingsUpdated?.Invoke();
     }
+
+    public void SetPlayerSpeedMultiplier(float value)
+    {
+        PlayerPrefs.SetFloat("speedMultiplier", value);
+        PlayerPrefs.Save();
+        settingsUpdated?.Invoke();
+    }
 }

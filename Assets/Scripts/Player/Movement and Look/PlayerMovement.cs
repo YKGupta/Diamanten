@@ -4,13 +4,17 @@ using NaughtyAttributes;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [BoxGroup("Settings (Testing)")]
+    public bool enableTesting = false;
     [BoxGroup("Settings")]
     public CharacterController controller;
     [BoxGroup("Settings")]
     public Animator animator;
     [BoxGroup("Settings")]
+    [ReadOnly]
     public float walkSpeed = 12f;
     [BoxGroup("Settings")]
+    [ReadOnly]
     public float sprintSpeed = 16f;
     [BoxGroup("Settings")]
     public Transform groundCheck;
@@ -23,6 +27,7 @@ public class PlayerMovement : MonoBehaviour
     [BoxGroup("Settings")]
     public float jumpHeight = 5f;
     [BoxGroup("Settings (Sounds)")]
+    [ReadOnly]
     public float stepLength = 2;
     [BoxGroup("Settings (Sprint)")]
     public PeakSyncMeter peakSyncMeter;
@@ -45,6 +50,7 @@ public class PlayerMovement : MonoBehaviour
     [ReadOnly]
     public float y;
     [BoxGroup("Settings (Crouch)")]
+    [ReadOnly]
     public float crouchSpeed = 2f;
     [BoxGroup("Settings (Crouch)")]
     public float transitionDuration = 1f;
@@ -109,6 +115,20 @@ public class PlayerMovement : MonoBehaviour
         initialPlayerGFXPosition = playerGFX.localPosition;
         isCrouching = false;
         stepCycle = 0f;
+        SettingsManager.instance.settingsUpdated += OnSettingsUpdated;
+        OnSettingsUpdated();
+    }
+
+    public void OnSettingsUpdated()
+    {
+        if(!enableTesting)
+            return;
+        walkSpeed = Constants.instance.DEFAULT_WALK_SPEED * PlayerPrefs.GetFloat("speedMultiplier", 1f);
+        sprintSpeed = Constants.instance.DEFAULT_SPRINT_SPEED * PlayerPrefs.GetFloat("speedMultiplier", 1f);
+        crouchSpeed = Constants.instance.DEFAULT_CROUCH_SPEED * PlayerPrefs.GetFloat("speedMultiplier", 1f);
+        stepLength = Constants.instance.DEFAULT_STEP_LENGTH * PlayerPrefs.GetFloat("speedMultiplier", 1f);
+        if(isCrouching)
+            speed = crouchSpeed;
     }
 
     private void Update()
