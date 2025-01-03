@@ -11,6 +11,12 @@ public class ObjectivesUIController : MonoBehaviour
     public GameObject objectivePrefab;
     [BoxGroup("Settings")]
     public ObjectivesManager objectivesManager;
+    [BoxGroup("Settings (Styling)")]
+    public TextStyle completedObjectiveStyle;
+    [BoxGroup("Settings (Styling)")]
+    public TextStyle currentObjectiveStyle;
+    [BoxGroup("Settings (Styling)")]
+    public TextStyle futureObjectiveStyle;
 
     private List<GameObject> objectivesGOList;
 
@@ -24,12 +30,19 @@ public class ObjectivesUIController : MonoBehaviour
         for(int i = 0; i < objectivesGOList.Count; i++)
         {
             if(i < index)
-                objectivesGOList[i].GetComponentInChildren<TMP_Text>().fontStyle = FontStyles.Strikethrough;
+                SetStyle(objectivesGOList[i].GetComponentInChildren<TMP_Text>(), completedObjectiveStyle);
             else if(i == index)
-                objectivesGOList[i].GetComponentInChildren<TMP_Text>().fontStyle = FontStyles.Normal;
+                SetStyle(objectivesGOList[i].GetComponentInChildren<TMP_Text>(), currentObjectiveStyle);
             else
-                objectivesGOList[i].GetComponentInChildren<TMP_Text>().fontStyle = FontStyles.Italic;
+                SetStyle(objectivesGOList[i].GetComponentInChildren<TMP_Text>(), futureObjectiveStyle);
         }
+    }
+
+    private void SetStyle(TMP_Text text, TextStyle style)
+    {
+        text.fontStyle = style.fontStyle;
+        text.fontSize = style.fontSize;
+        text.color = style.color;
     }
 
     private void SetAllObjectives()
