@@ -405,13 +405,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2059959236}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 1834292437}
+        m_TargetAssemblyTypeName: Toggler, Assembly-CSharp
+        m_MethodName: Toggle
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 2059959236}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -11293,6 +11293,7 @@ GameObject:
   - component: {fileID: 1834292435}
   - component: {fileID: 1834292434}
   - component: {fileID: 1834292436}
+  - component: {fileID: 1834292437}
   m_Layer: 0
   m_Name: Main Menu Manager
   m_TagString: Untagged
@@ -11402,6 +11403,18 @@ MonoBehaviour:
   PLAYER_INVENTORY_INTERACTION_RANGE: 1.25
   MANNEQUIN_SLEEP_DOOR_RANGE: 1.25
   MANNEQUIN_SLEEP_RANGE: 1.25
+--- !u!114 &1834292437
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1834292431}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3493e44b1d6ba1e4395c0187139beb15, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1836774972
 GameObject:
   m_ObjectHideFlags: 0
