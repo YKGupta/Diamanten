@@ -42,4 +42,12 @@ public class SettingsManager : MonoBehaviour
         PlayerPrefs.Save();
         settingsUpdated?.Invoke();
     }
+
+    public void SetQuality(int index)
+    {
+        QualitySettings.SetQualityLevel(index);
+        PlayerPrefs.SetInt("qualitySettings", index);
+        PlayerPrefs.Save();
+        settingsUpdated?.Invoke();
+    }
 }

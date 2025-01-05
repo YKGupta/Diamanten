@@ -2,6 +2,8 @@ using System.Collections;
 using UnityEngine;
 using NaughtyAttributes;
 
+// NOTE- Default player speed if is 1, then the current multiplier for all speeds is: 0.835
+
 public class PlayerMovement : MonoBehaviour
 {
     [BoxGroup("Settings (Testing)")]
