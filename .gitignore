@@ -78,4 +78,5 @@ crashlytics-build.properties
 # Large Size Assets
 Hospital/
 *.fbx
+*.obj
 Build.zip
