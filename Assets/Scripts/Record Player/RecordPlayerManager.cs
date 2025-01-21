@@ -1,11 +1,13 @@
 using System;
 using UnityEngine;
+using UnityEngine.Events;
 using NaughtyAttributes;
 
 public class RecordPlayerManager : MonoBehaviour
 {
     public RecordPlayer[] recordPlayers;
     public int[] correctOrder;
+    public UnityEvent onRecordsPlayCorrectly;
 
     [ReadOnly]
     public int[] currentOrder;
@@ -44,5 +46,7 @@ public class RecordPlayerManager : MonoBehaviour
             }
         }
         areRecordsPlayedCorrectly = f;
+        if(areRecordsPlayedCorrectly)
+            onRecordsPlayCorrectly.Invoke();
     }
 }
