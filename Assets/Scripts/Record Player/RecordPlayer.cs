@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Events;
 using NaughtyAttributes;
 
 public class RecordPlayer : MonoBehaviour, IInteractionEffect
@@ -7,6 +8,7 @@ public class RecordPlayer : MonoBehaviour, IInteractionEffect
     public GameObject interactionUIGO;
     public KeyCode playKey;
     public int order;
+    public UnityEvent onRecordPlay_UnityEvent;
 
     public event Action<RecordPlayer> onRecordPlay;
 
@@ -25,6 +27,7 @@ public class RecordPlayer : MonoBehaviour, IInteractionEffect
         
         isPlaying = true;
         onRecordPlay?.Invoke(this);
+        onRecordPlay_UnityEvent.Invoke();
     }
 
     public void StartEffect()
