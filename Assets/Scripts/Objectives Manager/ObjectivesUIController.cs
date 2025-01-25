@@ -11,6 +11,10 @@ public class ObjectivesUIController : MonoBehaviour
     public GameObject objectivePrefab;
     [BoxGroup("Settings")]
     public ObjectivesManager objectivesManager;
+    [BoxGroup("Settings")]
+    public TMP_Text objectiveText;
+    [BoxGroup("Settings")]
+    public Animator objectiveTextAnimator;
     [BoxGroup("Settings (Styling)")]
     public TextStyle completedObjectiveStyle;
     [BoxGroup("Settings (Styling)")]
@@ -19,9 +23,11 @@ public class ObjectivesUIController : MonoBehaviour
     public TextStyle futureObjectiveStyle;
 
     private List<GameObject> objectivesGOList;
+    private int currentInd;
 
     private void Start()
     {
+        currentInd = 0;
         SetAllObjectives();
     }
 
@@ -36,6 +42,13 @@ public class ObjectivesUIController : MonoBehaviour
             else
                 SetStyle(objectivesGOList[i].GetComponentInChildren<TMP_Text>(), futureObjectiveStyle);
         }
+        currentInd = index;
+        objectiveTextAnimator.SetTrigger("animate");
+    }
+
+    public void UpdateText()
+    {
+        objectiveText.text = objectivesManager.objectives[currentInd].title;
     }
 
     private void SetStyle(TMP_Text text, TextStyle style)
