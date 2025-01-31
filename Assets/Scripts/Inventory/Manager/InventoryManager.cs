@@ -55,6 +55,7 @@ public class InventoryManager : MonoBehaviour
         item.gameObject.GetComponent<Renderer>().enabled = false;
         item.gameObject.GetComponent<Collider>().enabled = false;
         item.enabled = false;
+        SoundManager.PlaySound(SoundType.SurgicalToolCollect);
 
         SetInventory();
     }

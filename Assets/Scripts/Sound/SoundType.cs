@@ -5,5 +5,14 @@ public enum SoundType
     Jumping,
     Landing,
     DoorOpen,
-    DoorClose
+    DoorClose,
+    DoorLocked,
+    LanternOn,
+    LanternOff,
+    TubelightAmbience,
+    NoteCollect,
+    RecordCollect,
+    RecordPlace,
+    SwitchToggle,
+    SurgicalToolCollect
 }

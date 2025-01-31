@@ -34,6 +34,7 @@ public class FindAndPlaceManager : MonoBehaviour
         
         currentItem = items[obj];
         currentItem.findItem.OnItemCollected();
+        SoundManager.PlaySound(SoundType.RecordCollect);
     }
 
     public void ReleaseItem(GameObject obj)
@@ -45,5 +46,6 @@ public class FindAndPlaceManager : MonoBehaviour
         
         currentItem = null;
         placeItem.OnItemReleased();
+        SoundManager.PlaySound(SoundType.RecordPlace);
     }
 }

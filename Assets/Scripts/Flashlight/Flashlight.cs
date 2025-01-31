@@ -28,7 +28,7 @@ public class Flashlight : MonoBehaviour
     {
         LightGO = light.gameObject;
         useLight = false;
-        SetLight(false);
+        SetLight(false, false);
     }
 
     private void Update()
@@ -53,8 +53,10 @@ public class Flashlight : MonoBehaviour
         light.color = color;
     }
 
-    public void SetLight(bool state = true)
+    public void SetLight(bool state = true, bool playSound = true)
     {        
         LightGO.SetActive(state);
+        if(playSound)
+            SoundManager.PlaySound(state ? SoundType.LanternOn : SoundType.LanternOff);
     }
 }

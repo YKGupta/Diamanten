@@ -49,6 +49,7 @@ public class NotesManager : MonoBehaviour
     {
         noteItems.Add(item);
         onCollectNote.Invoke();
+        SoundManager.PlaySound(SoundType.NoteCollect);
 
         GameObject newNote = Instantiate(noteUIPrefab, noteUIContentParent);
 

@@ -20,6 +20,7 @@ public class SwitchHandler : MonoBehaviour
     public void Interact()
     {
         state = !state;
+        SoundManager.PlaySound(SoundType.SwitchToggle);
         if(state)
             onStateTrue.Invoke();
         else
