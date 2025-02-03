@@ -14,5 +14,8 @@ public enum SoundType
     RecordCollect,
     RecordPlace,
     SwitchToggle,
-    SurgicalToolCollect
+    SurgicalToolCollect,
+    ObjectiveComplete,
+    Victory,
+    Death
 }

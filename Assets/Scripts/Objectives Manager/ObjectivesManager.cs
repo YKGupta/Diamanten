@@ -19,6 +19,8 @@ public class ObjectivesManager : MonoBehaviour
 
     public void SetNextObjective()
     {
+        if(currentObjectiveIndex > 0)
+            SoundManager.PlaySound(SoundType.ObjectiveComplete);
         currentObjectiveIndex++;
         onNextObjective.Invoke(currentObjectiveIndex);
     }

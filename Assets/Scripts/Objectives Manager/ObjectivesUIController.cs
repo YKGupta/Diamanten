@@ -48,6 +48,9 @@ public class ObjectivesUIController : MonoBehaviour
 
     public void UpdateText()
     {
+        if(currentInd >= objectivesManager.objectives.Length)
+            return;
+
         objectiveText.text = objectivesManager.objectives[currentInd].title;
     }
 

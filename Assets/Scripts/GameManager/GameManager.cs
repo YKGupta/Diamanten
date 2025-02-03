@@ -12,6 +12,12 @@ public class GameManager : MonoBehaviour
         onStart.Invoke();
     }
 
+    public void EndGame()
+    {
+        Debug.Log("You won!");
+        SoundManager.PlaySound(SoundType.Victory);
+    }
+
     public void Quit()
     {
         Application.Quit();
