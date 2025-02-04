@@ -11,10 +11,17 @@ public class MenuManager : MonoBehaviour
     [BoxGroup("Settings")]
     public KeyCode pauseKey;
     [BoxGroup("Settings")]
+    public bool allowToOpenInventory = false;
+    [BoxGroup("Settings")]
+    public bool allowToOpenObjectives = false;
+
+    [BoxGroup("Settings")]
+    [ShowIf("allowToOpenInventory")]
     public KeyCode inventoryKey;
     [BoxGroup("Settings")]
     public KeyCode notebookKey;
     [BoxGroup("Settings")]
+    [ShowIf("allowToOpenObjectives")]
     public KeyCode objectiveKey;
     [BoxGroup("Settings")]
     public GameObject pauseMenuGO;
@@ -49,7 +56,7 @@ public class MenuManager : MonoBehaviour
                 loadingPercentageText.text = string.Format(loadingFormat, clampedValue * 100f);
             return;
         }
-        bool pauseKeyPressed = Input.GetKeyDown(pauseKey), inventoryKeyPressed = Input.GetKeyDown(inventoryKey), notebookKeyPressed = Input.GetKeyDown(notebookKey), objectiveKeyPressed = Input.GetKeyDown(objectiveKey);
+        bool pauseKeyPressed = Input.GetKeyDown(pauseKey), inventoryKeyPressed = allowToOpenInventory && Input.GetKeyDown(inventoryKey), notebookKeyPressed = Input.GetKeyDown(notebookKey), objectiveKeyPressed = allowToOpenObjectives && Input.GetKeyDown(objectiveKey);
         if(!pauseKeyPressed && !inventoryKeyPressed && !notebookKeyPressed && !objectiveKeyPressed)
             return;
         NavLink target = pauseKeyPressed ? NavLink.PauseMenu : inventoryKeyPressed ? NavLink.Inventory : notebookKeyPressed ? NavLink.Notebook : NavLink.Objective;
