@@ -19,6 +19,7 @@ public class SettingsManager : MonoBehaviour
     private void Start()
     {
         audioMixer.SetFloat("volume", (float)Math.Log10(PlayerPrefs.GetFloat("volume", 1f)) * 20);
+        QualitySettings.SetQualityLevel(PlayerPrefs.GetInt("qualitySettings", Constants.instance.DEFAULT_QUALITY_SETTINGS));
     }
 
     public void SetVolume(float value)
