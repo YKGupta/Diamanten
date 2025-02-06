@@ -7,6 +7,7 @@ public class NoteItemButton : MonoBehaviour
 
     public void OnClick()
     {
+        SoundManager.PlaySound(SoundType.Click);
         onButtonClick?.Invoke(this);
     }
 }

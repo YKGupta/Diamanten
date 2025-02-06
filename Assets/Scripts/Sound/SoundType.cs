@@ -17,5 +17,6 @@ public enum SoundType
     SurgicalToolCollect,
     ObjectiveComplete,
     Victory,
-    Death
+    Death,
+    Click
 }
