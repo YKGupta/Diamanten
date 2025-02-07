@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using NaughtyAttributes;
 
@@ -18,9 +19,11 @@ public class MannequinChase : MonoBehaviour, ITargetStateHandler
     public bool showGizmos;
 
     [ReadOnly]
-    public float timeToInterval;
+    public float timeToInterval, currentInterval;
     [ReadOnly]
     public bool isChasing;
+
+    public Action<MannequinChase> onNewInterval;
 
     private void Start()
     {
@@ -62,6 +65,9 @@ public class MannequinChase : MonoBehaviour, ITargetStateHandler
     public void SetNextInterval()
     {
         timeToInterval = GetRandomInterval();
+        currentInterval = timeToInterval;
+        if(onNewInterval != null)
+            onNewInterval.Invoke(this);
         isChasing = false;
         movement.useDefault = true;
         movement.StopAgent();
@@ -71,7 +77,7 @@ public class MannequinChase : MonoBehaviour, ITargetStateHandler
 
     private float GetRandomInterval()
     {
-        return Random.Range(minInterval, maxInterval);
+        return UnityEngine.Random.Range(minInterval, maxInterval);
     }
 
     private bool isPlayerWithinRange()
