@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 using NaughtyAttributes;
 
@@ -12,13 +13,22 @@ public class ChaseTimer : MonoBehaviour
     public GameObject chaseTimerGO;
     [BoxGroup("Settings (UI)")]
     public Image timerImage;
+    [BoxGroup("Settings (Events)")]
+    public UnityEvent firstTimeOn;
+    [BoxGroup("Settings (Events)")]
+    public UnityEvent firstTimeOff;
 
     [ReadOnly]
     public MannequinChase currentMannequin;
 
+    private bool wasActive;
+    private bool firstTimeOver;
+
     private void Start()
     {
         chaseTimerGO.SetActive(false);
+        wasActive = false;
+        firstTimeOver = false;
         for(int i = 0; i < mannequinsParent.childCount; i++)
         {
             mannequinsParent.GetChild(i).GetComponent<MannequinChase>().onNewInterval += OnNewInterval;
@@ -35,6 +45,17 @@ public class ChaseTimer : MonoBehaviour
             return;
         chaseTimerGO.SetActive(playerSafe.isSafe);
         timerImage.fillAmount = currentMannequin.timeToInterval / currentMannequin.currentInterval;
+        if(!firstTimeOver && wasActive != chaseTimerGO.activeSelf)
+        {
+            if(chaseTimerGO.activeSelf)
+                firstTimeOn.Invoke();
+            else
+            {
+                firstTimeOff.Invoke();
+                firstTimeOver = true;
+            }
+        }
+        wasActive = chaseTimerGO.activeSelf;
     }
 
     public void OnNewInterval(MannequinChase mannequin)
