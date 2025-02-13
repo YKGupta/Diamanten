@@ -6,6 +6,8 @@ public class GameManager : MonoBehaviour
 {
     [BoxGroup("Events")]
     public UnityEvent onStart;
+    [BoxGroup("Events")]
+    public UnityEvent onGameWon;
 
     private void Start()
     {
@@ -16,6 +18,8 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("You won!");
         SoundManager.PlaySound(SoundType.Victory);
+        Cursor.lockState = CursorLockMode.None;
+        onGameWon.Invoke();
     }
 
     public void Quit()

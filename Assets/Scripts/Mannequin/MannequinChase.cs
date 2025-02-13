@@ -27,7 +27,7 @@ public class MannequinChase : MonoBehaviour, ITargetStateHandler
 
     private void Start()
     {
-        timeToInterval = GetRandomInterval();
+        currentInterval = timeToInterval = GetRandomInterval();
         isChasing = false;
     }
 

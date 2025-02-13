@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 using TMPro;
 using NaughtyAttributes;
 using System.Collections;
@@ -9,16 +10,43 @@ public class TextFader : MonoBehaviour
     public TMP_Text text;
     [BoxGroup("Settings")]
     public float duration;
+    [BoxGroup("Events")]
+    public UnityEvent onFadeEnd;
+
+    private float fadeEndTime;
+    private bool hasFadeEnded;
+
+    private void Start()
+    {
+        fadeEndTime = -1;
+    }
+
+    private void Update()
+    {
+        if(fadeEndTime < 0 || hasFadeEnded)
+            return;
+        if(Time.unscaledTime >= fadeEndTime)
+        {
+            onFadeEnd.Invoke();
+            fadeEndTime = -1;
+            hasFadeEnded = true;
+        }
+    }    
 
     [ContextMenu("Fade")]
     public void FadeInText()
     {
+        if(Time.unscaledTime < fadeEndTime)
+            return;
+
+        hasFadeEnded = false;
         text.ForceMeshUpdate();
         TMP_TextInfo textInfo = text.textInfo;
         int totalCharacters = textInfo.characterCount;
 
         float fadeStep = duration / totalCharacters;
-        float overallStart = Time.time;
+        float overallStart = Time.unscaledTime;
+        fadeEndTime = overallStart + duration;
 
         for (int i = 0; i < totalCharacters; i++)
         {
@@ -34,9 +62,9 @@ public class TextFader : MonoBehaviour
         if (!charInfo.isVisible)
             yield break;
 
-        while(Time.time < fadeStartTime + duration)
+        while(Time.unscaledTime < fadeStartTime + duration)
         {
-            float progress = Mathf.Clamp01((Time.time - fadeStartTime) / duration);
+            float progress = Mathf.Clamp01((Time.unscaledTime - fadeStartTime) / duration);
             UpdateCharacterAlpha(charIndex, progress);
             yield return null;
         }
